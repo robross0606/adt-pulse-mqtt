@@ -1,9 +1,9 @@
 {
   "name": "ADT Pulse MQTT",
   "version": "3.1.1",
-  "slug": "adtpulsemqtt",
+  "slug": "adtpulsemqtt-bigthundersr",
   "description": "ADT Pulse Bridge using MQTT",
-  "url":"https://github.com/adt-pulse-mqtt/adt-pulse-mqtt",
+  "url":"https://github.com/BigThunderSR/adt-pulse-mqtt",
   "startup": "application",
   "boot": "auto",
   "host_network" : false,
@@ -15,7 +15,7 @@
     "share:rw",
     "ssl"
   ],
-  "image": "adtpulsemqtt/adt-pulse-mqtt-{arch}",
+  "image": "bigthundersr/adt-pulse-mqtt-{arch}",
   "options": {
       "ssl": false,
       "certfile": "fullchain.pem",

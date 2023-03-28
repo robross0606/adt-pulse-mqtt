@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/adt-pulse-mqtt/adt-pulse-mqtt"
+    "url": "https://github.com/BigThunderSR/adt-pulse-mqtt"
   },
   "license": "ISC",
   "dependencies": {
