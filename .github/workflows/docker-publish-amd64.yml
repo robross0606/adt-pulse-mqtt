@@ -69,8 +69,8 @@ jobs:
           images: |
             bigthundersr/adt-pulse-mqtt
             bigthundersr/adt-pulse-mqtt-amd64
-            ghcr.io/bigthundersr/adt-pulse-mqtt
-            ghcr.io/bigthundersr/adt-pulse-mqtt-amd64
+            #ghcr.io/bigthundersr/adt-pulse-mqtt
+            #ghcr.io/bigthundersr/adt-pulse-mqtt-amd64
           flavor: |
             latest=true
           tags: |
