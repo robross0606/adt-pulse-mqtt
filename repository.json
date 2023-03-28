@@ -1,5 +1,5 @@
 {
-  "name": "ADT Pulse Bridge using MQTT",
-  "url": "https://github.com/adt-pulse-mqtt/adt-pulse-mqtt",
-  "maintainer": "ADT Pulse MQTT Team"
+  "name": "ADT Pulse Bridge using MQTT - BigThunderSR Fork",
+  "url": "https://github.com/BigThunderSR/adt-pulse-mqtt",
+  "maintainer": "BigThunderSR"
 }

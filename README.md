@@ -4,7 +4,7 @@ ADT Pulse bridge for Home Assistant using MQTT.
 Integrates ADT Pulse with Home Assistant. You can also choose to add the ADT Pulse alarm system and ADT devices to your SmartThings. SmartApp allows automatic running our Routines upon alarm changing states.
 
 ## Home Assistant Setup 
-- First, add the repository (https://github.com/adt-pulse-mqtt/hassio) using the Add-on Store in the Home Assistant Supervisor. This is the easiest way to run this add-on, but it can also run as an independent container using Docker. In both cases, communication is through MQTT.
+- First, add the repository (https://github.com/BigThunderSR/adt-pulse-mqtt) using the Add-on Store in the Home Assistant Supervisor. This is the easiest way to run this add-on, but it can also run as an independent container using Docker. In both cases, communication is through MQTT.
 - Install ADT Pulse MQTT from the store. Don't forget to configure `pulse_login` with your ADT Pulse Portal username and password. A separate login for Home Assistant is recommended. 
 - Configure Add-on Options
 
