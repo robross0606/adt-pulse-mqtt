@@ -1,0 +1,90 @@
+name: Notarize Assets with CAS
+
+on:
+  workflow_dispatch:
+  #push:
+  #  branches: [main]
+  workflow_run:
+    workflows: ["Lint", "CodeQL"]    
+    types: [completed]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  notarize-assets-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.3.0
+    
+      - name: Notarize LICENSE
+        #--> Run the GitHub action
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:
+          # Whatever asset is being notarized, can be a target/ or dist/ compiled binary or any type of file          
+          asset: LICENSE
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize README.md        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: README.md
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize repository.json        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: repository.json
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+          
+      
+      - name: Notarize adt-pulse-mqtt/CHANGELOG.md     
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: adt-pulse-mqtt/CHANGELOG.md
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize adt-pulse-mqtt/config.json        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: adt-pulse-mqtt/config.json
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize adt-pulse-mqtt/Dockerfile        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: adt-pulse-mqtt/Dockerfile
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize adt-pulse-mqtt/Dockerfile-armhf        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: adt-pulse-mqtt/Dockerfile-armhf
+          cas_api_key: ${{ secrets.CAS_API_KEY }}          
+      - name: Notarize adt-pulse-mqtt/icon.png        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: adt-pulse-mqtt/icon.png
+          cas_api_key: ${{ secrets.CAS_API_KEY }}      
+      - name: Notarize adt-pulse-mqtt/logo.png        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: adt-pulse-mqtt/logo.png
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize adt-pulse-mqtt/package.json        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: adt-pulse-mqtt/package.json
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize adt-pulse-mqtt/package-lock.json        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: adt-pulse-mqtt/package-lock.json
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize adt-pulse-mqtt/run.sh        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: adt-pulse-mqtt/run.sh
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize adt-pulse-mqtt/server.js        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: adt-pulse-mqtt/server.js
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
