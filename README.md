@@ -47,7 +47,7 @@ In most cases, these options are sufficient. Alternatively, the mqtt_url can be 
 ### Home Assistant Configuration
 This add-on uses the Home Assistant integrations for MQTT Alarm Control Panel and MQTT Binary Sensor.
 
- Ton configure these, you must edit your configuration.yaml:
+ To configure these, you must edit your configuration.yaml:
 
 To add the control panel:
 
