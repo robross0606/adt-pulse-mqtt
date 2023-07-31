@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Pull amd64 Docker image
-        run: docker pull bigthundersr/adt-pulse-mqtt-amd64:3.1.1
+        run: docker pull bigthundersr/adt-pulse-mqtt-amd64
         shell: bash
       
       - name: Notarize amd64 Docker Image BOM
@@ -27,19 +27,19 @@ jobs:
           # uses: codenotary/cas-notarize-docker-image-github-action@v1.0.0
         uses: codenotary/cas-notarize-docker-image-bom-github-action@main
         with:
-          asset: docker://bigthundersr/adt-pulse-mqtt-amd64:3.1.1
+          asset: docker://bigthundersr/adt-pulse-mqtt-amd64
           cas_api_key: ${{ secrets.CAS_API_KEY }}
       
       - name: Authenticate amd64 Docker Image
         uses: codenotary/cas-authenticate-docker-image-github-action@main
         with:
-          asset: docker://bigthundersr/adt-pulse-mqtt-amd64:3.1.1
+          asset: docker://bigthundersr/adt-pulse-mqtt-amd64
           signerID: QmlnVGh1bmRlclNSQG91dGxvb2suY29t
           
       - name: Authenticate amd64 Docker Image BOM
         uses: codenotary/cas-authenticate-docker-bom-github-action@main
         with:
-          asset: docker://bigthundersr/adt-pulse-mqtt-amd64:3.1.1
+          asset: docker://bigthundersr/adt-pulse-mqtt-amd64
           signerID: QmlnVGh1bmRlclNSQG91dGxvb2suY29t
   
   
@@ -95,9 +95,9 @@ jobs:
             export CAS_API_KEY=${{ secrets.CAS_API_KEY }}; "${PWD}/cas" login
             case "${{ matrix.arch }}" in
               armv7)
-                docker pull bigthundersr/adt-pulse-mqtt-armhf:3.1.1
+                docker pull bigthundersr/adt-pulse-mqtt-armhf
                 ;;              
             esac
             
-            "${PWD}/cas" notarize --bom docker://bigthundersr/adt-pulse-mqtt-armhf:3.1.1
-            "${PWD}/cas" authenticate --bom docker://bigthundersr/adt-pulse-mqtt-armhf:3.1.1
+            "${PWD}/cas" notarize --bom docker://bigthundersr/adt-pulse-mqtt-armhf
+            "${PWD}/cas" authenticate --bom docker://bigthundersr/adt-pulse-mqtt-armhf
