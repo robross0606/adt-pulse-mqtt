@@ -1,5 +1,7 @@
-ARG BUILD_FROM=balenalib/amd64-alpine:3.13-run
-FROM $BUILD_FROM
+#ARG BUILD_FROM=balenalib/amd64-alpine:3.13-run
+#FROM $BUILD_FROM
+
+FROM node:18-alpine
 
 ENV LANG C.UTF-8
 ENV NODE_ENV production
@@ -8,9 +10,9 @@ ENV NODE_ENV production
 #RUN apk add --update nodejs=~14
 #RUN apk add --update nodejs-npm=~14
 
-# Install node and npm (Node 16 LTS)
-RUN apk add --update nodejs=~16
-RUN apk add --update nodejs-npm=~16
+# Install node and npm (Node 18 LTS)
+RUN apk add --update nodejs=~18
+RUN apk add --update nodejs-npm=~18
 
 WORKDIR /usr/src/app
 
