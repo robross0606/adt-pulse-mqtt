@@ -17,7 +17,7 @@ The pulse_login options are:
 ADT Pulse now requires 2-factor authentication and you will need to provide a device fingerprint:
 
 1. Open a Chrome browser tab (under Incognito mode)
-2. Open Developer Tools (using **View** ➜ **Developer** ➜ **Developer Tools** menu)
+2. Open Developer Tools (using **Menu** ➜ **More tools** ➜ **Developer tools** menu or **Ctrl+Shift+I**)
 3. Click on the **Network** tab (make sure **Preserve log** checkbox is checked)
 4. In the filter box, enter `signin.jsp?networkid=`
 5. Go to https://portal.adtpulse.com or https://portal-ca.adtpulse.com and login to your account

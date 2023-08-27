@@ -7,6 +7,10 @@ ENV NODE_ENV production
 # Install node and npm
 RUN apk add --update-cache nodejs npm
 
+# Install node and npm (Node 18 LTS)
+#RUN apk add --update nodejs=~18
+#RUN apk add --update nodejs-npm=~18
+
 WORKDIR /usr/src/app
 
 # Install app dependencies
