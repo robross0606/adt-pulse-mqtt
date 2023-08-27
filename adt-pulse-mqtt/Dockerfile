@@ -4,9 +4,8 @@ FROM $BUILD_FROM
 ENV LANG C.UTF-8
 ENV NODE_ENV production
 
-# Install node and npm (Node 14 LTS)
-RUN apk add --update nodejs=~14
-RUN apk add --update nodejs-npm=~14
+# Install node and npm
+RUN apk add --update-cache nodejs npm
 
 # Install node and npm (Node 18 LTS)
 #RUN apk add --update nodejs=~18
@@ -16,7 +15,7 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package.json .
-RUN npm install --production
+RUN npm install --omit=dev
 
 # Bundle app source
 COPY . .
