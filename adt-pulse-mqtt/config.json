@@ -1,7 +1,7 @@
 {
   "name": "ADT Pulse MQTT - BigThunderSR",
-  "version": "3.1.3",
-  "slug": "adtpulsemqtt-bigthundersr",
+  "version": "3.1.4",
+  "slug": "adtpulsemqtt_bigthundersr",
   "description": "ADT Pulse Bridge using MQTT",
   "codenotary": "bigthundersr@outlook.com",
   "url":"https://github.com/BigThunderSR/adt-pulse-mqtt",
