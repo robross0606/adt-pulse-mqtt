@@ -111,7 +111,7 @@ The possible state values are:
 
 If a device type is not listed, open an issue containing your MQTT dump which lists your zones.
 
-## ~~Smartthings Support~~ - No Longer Valid Since Smartthings Depricated Groovy
+## ~~Smartthings Support~~ - No Longer Valid Since Smartthings Depricated Groovy IDE
 
 * ~~In Hassio, setting of the ADT Pulse MQTT set~~
 <strike>
@@ -122,13 +122,13 @@ If a device type is not listed, open an issue containing your MQTT dump which li
 
 * ~~In SmartThings IDE,~~
 
-~~1. add the following devicehandlers:
-https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/devicetypes/haruny/VirtualADTAlarmSystem.src~~ 
-~~1. add the following SmartApp: 
+1. ~~add the following devicehandlers:
+https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/devicetypes/haruny/VirtualADTAlarmSystem.src~~
+1. ~~add the following SmartApp: 
 https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/smartapps/haruny/ADTAlarmSmartApp.src~~
-~~1. Add your devices using SmartThings IDE. You have to name them the same way they appear in ADT Portal.~~
-~~1. Run the SmartApp in your mobile application. Follow the instructions. Do not rename ADT Alarm System device created by the app. Multiple alarm systems/locations is not supported.~~
-~~1. In MQTT Bridge app, select all the devices created (Alarm system, contacts, motion etc.)~~
+1. ~~Add your devices using SmartThings IDE. You have to name them the same way they appear in ADT Portal.~~
+1. ~~Run the SmartApp in your mobile application. Follow the instructions. Do not rename ADT Alarm System device created by the app. Multiple alarm systems/locations is not supported.~~
+1. ~~In MQTT Bridge app, select all the devices created (Alarm system, contacts, motion etc.)~~
 
 ## ~~Docker Compose~~
 ~~If you want to run this add-on independently using Docker, here is a sample Docker Compose file:~~
