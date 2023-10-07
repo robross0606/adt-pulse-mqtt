@@ -114,10 +114,11 @@ If a device type is not listed, open an issue containing your MQTT dump which li
 ## ~~Smartthings Support~~ - No Longer Valid Since Smartthings Depricated Groovy
 
 * ~~In Hassio, setting of the ADT Pulse MQTT set~~
-
-~~<pre>
+<strike>
+<pre>
 "smartthings": true
-</pre>~~
+</pre>
+</strike>
 
 * ~~In SmartThings IDE,~~
 
@@ -131,7 +132,7 @@ https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/smartapps/haruny/AD
 
 ## ~~Docker Compose~~
 ~~If you want to run this add-on independently using Docker, here is a sample Docker Compose file:~~
-
+<strike>
 ```
 version: '3'
 services:
@@ -162,3 +163,4 @@ services:
     "smartthings": false
 }
 ```
+</strike>
