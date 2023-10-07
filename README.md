@@ -111,7 +111,7 @@ The possible state values are:
 
 If a device type is not listed, open an issue containing your MQTT dump which lists your zones.
 
-## Smartthings Support
+## Smartthings Support - No Longer Valid Since Smartthings Depricated Groovy
 
 * In Hassio, setting of the ADT Pulse MQTT set
 
