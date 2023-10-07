@@ -1,7 +1,7 @@
 # adt-pulse-mqtt
 ADT Pulse bridge for Home Assistant using MQTT. 
 
-Integrates ADT Pulse with Home Assistant. You can also choose to add the ADT Pulse alarm system and ADT devices to your SmartThings. SmartApp allows automatic running our Routines upon alarm changing states.
+Integrates ADT Pulse with Home Assistant. ~~You can also choose to add the ADT Pulse alarm system and ADT devices to your SmartThings. SmartApp allows automatic running our Routines upon alarm changing states.~~
 
 ## Home Assistant Setup
 
@@ -111,26 +111,26 @@ The possible state values are:
 
 If a device type is not listed, open an issue containing your MQTT dump which lists your zones.
 
-## Smartthings Support - No Longer Valid Since Smartthings Depricated Groovy
+## ~~Smartthings Support~~ - No Longer Valid Since Smartthings Depricated Groovy
 
-* In Hassio, setting of the ADT Pulse MQTT set
+* ~~In Hassio, setting of the ADT Pulse MQTT set~~
 
-<pre>
+~~<pre>
 "smartthings": true
-</pre>
+</pre>~~
 
-* In SmartThings IDE,
+* ~~In SmartThings IDE,~~
 
-1. add the following devicehandlers:
-https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/devicetypes/haruny/VirtualADTAlarmSystem.src 
-1. add the following SmartApp: 
-https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/smartapps/haruny/ADTAlarmSmartApp.src
-1. Add your devices using SmartThings IDE. You have to name them the same way they appear in ADT Portal.
-1. Run the SmartApp in your mobile application. Follow the instructions. Do not rename ADT Alarm System device created by the app. Multiple alarm systems/locations is not supported.
-1. In MQTT Bridge app, select all the devices created (Alarm system, contacts, motion etc.)
+~~1. add the following devicehandlers:
+https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/devicetypes/haruny/VirtualADTAlarmSystem.src~~ 
+~~1. add the following SmartApp: 
+https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/smartapps/haruny/ADTAlarmSmartApp.src~~
+~~1. Add your devices using SmartThings IDE. You have to name them the same way they appear in ADT Portal.~~
+~~1. Run the SmartApp in your mobile application. Follow the instructions. Do not rename ADT Alarm System device created by the app. Multiple alarm systems/locations is not supported.~~
+~~1. In MQTT Bridge app, select all the devices created (Alarm system, contacts, motion etc.)~~
 
-## Docker Compose
-If you want to run this add-on independently using Docker, here is a sample Docker Compose file:
+## ~~Docker Compose~~
+~~If you want to run this add-on independently using Docker, here is a sample Docker Compose file:~~
 
 ```
 version: '3'
@@ -141,9 +141,9 @@ services:
       network_mode: host
       restart: always
       volumes:
-       - /local/path/to/config-directory:/data
+       - /local/path/to/config-directory:/data~~
 ```
-Sample config.json placed in the config-directory:
+~~Sample config.json placed in the config-directory:~~
 ```
 {
     "pulse_login" : {
