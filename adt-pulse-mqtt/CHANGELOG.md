@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.7
+
+- Updated dependencies
+
 ## 3.1.6
 
 - Updated dependencies
