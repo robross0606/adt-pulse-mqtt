@@ -121,11 +121,11 @@ myAlarm.onStatusUpdate(
       }
 
       if (!mqtt_state.includes(alarm_last_state) && !mqtt_state.includes('unknown')) {
-         console.log((new Date()).toLocaleString()+": Pushing alarm state: "+mqtt_state+" to "+alarm_state_topic);
+         console.log((new Date()).toLocaleString()+" : Pushing alarm state: "+mqtt_state+" to "+alarm_state_topic);
          client.publish(alarm_state_topic, mqtt_state,{"retain":true});
          if (smartthings){
            var sm_alarm_topic = smartthings_topic+"/ADT Alarm System/alarm/cmd";
-           console.log((new Date()).toLocaleString()+": Pushing alarm state to smartthings"+sm_alarm_topic);
+           console.log((new Date()).toLocaleString()+" : Pushing alarm state to smartthings"+sm_alarm_topic);
            client.publish(sm_alarm_topic, sm_alarm_value,{"retain":false});
          }
         alarm_last_state = mqtt_state;
