@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.10
+
+- Fixed a couple of typos in log output
+- Changed publishing logic
+
 ## 3.1.9
 
 - Updated dependencies
