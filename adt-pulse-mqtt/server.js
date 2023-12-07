@@ -157,7 +157,7 @@ myAlarm.onZoneUpdate(
        sm_dev_zone_state_topic=smartthings_topic+"/"+device.name+"/"+contactType+"/cmd";
     }
 
-    if (devices[device.id]==null || device.timestamp > devices[device.id].timestamp) {
+    if (devices[device.id]==null || devices[device.id]!=null || device.timestamp > devices[device.id].timestamp) {
         client.publish(dev_zone_state_topic, device.state, {"retain":false});
         console.log((new Date()).toLocaleString()+" : Pushing device state: " + device.state+  " to topic " + dev_zone_state_topic);
 
