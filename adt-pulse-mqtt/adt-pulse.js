@@ -84,7 +84,7 @@ module.exports = pulse;
 				function(e, hResp) {
 					// expecting /myhome/VERSION/access/signin.jsp
 					if (hResp==null){
-							console.log((new Date()).toLocaleString() + ' Pulse: Authentication bad response error:'+JSON.stringify(e));
+							console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Authentication bad response error:'+JSON.stringify(e));
 							that.authenticated =false;
 							that.isAuthenticating = false;
 							deferred.reject();
@@ -116,12 +116,12 @@ module.exports = pulse;
 							that.isAuthenticating = false;
 							if(err || httpResponse.request.path !== that.config.prefix+that.config.summaryURI){
 								that.authenticated = false;
-								console.log((new Date()).toLocaleString() + ' Pulse: Authentication Failed');
+								console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Authentication Failed');
 								console.log((new Date()).toLocaleString() + ' Pulse: httpResponse:' + JSON.stringify(httpResponse));
 								deferred.reject();
 							} else {
 								that.authenticated = true;
-								console.log((new Date()).toLocaleString() + ' Pulse: Authentication Success');
+								console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Authentication Success');
 								deferred.resolve();
 								that.updateAll.call(that);
 							}
@@ -137,7 +137,7 @@ module.exports = pulse;
 
 		var that = this;
 
-		console.log((new Date()).toLocaleString() + ' Pulse: Logout');
+		console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Logout');
 
 		request(
 			{
@@ -177,7 +177,7 @@ module.exports = pulse;
 			},
 			function(err, httpResponse, body) {
 				if(err){
-					console.log((new Date().toLocaleString()) + ' Pulse.getZoneStatus (via Orb): Zone JSON Failed');
+					console.log("\x1b[31m%s\x1b[0m",(new Date().toLocaleString()) + ' Pulse.getZoneStatus (via Orb): Zone JSON Failed');
 				} else {
 						// Load response from call to Orb and parse html
 						const $ = cheerio.load(body);
@@ -232,7 +232,7 @@ module.exports = pulse;
 
 						});
 
-							console.log((new Date().toLocaleString()) + ' ADT Pulse: Get zone status (via orb) success.');
+							console.log("\x1b[32m%s\x1b[0m",(new Date().toLocaleString()) + ' ADT Pulse: Get zone status (via orb) success.');
 							output.forEach(function(obj){
 								var s = obj;
 								console.log((new Date().toLocaleString()) + ' Sensor: ' + s.id + ' Name: ' + s.name + ' Tags: ' + s.tags + ' State ' + s.state);
@@ -277,7 +277,7 @@ module.exports = pulse;
 					})
 				}
 				catch(e){
-					console.log((new Date()).toLocaleString() + ' Pulse.getDeviceStatus failed: ::'+body+"::");
+					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.getDeviceStatus failed: ::'+body+"::");
 				}
 			}
 		);
@@ -295,7 +295,7 @@ module.exports = pulse;
 
 	// not tested
 	this.deviceStateChange = function (device) {
-		console.log((new Date()).toLocaleString() + ' Pulse.deviceStateChange: Device State Change', device.name, device.state);
+		console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.deviceStateChange: Device State Change', device.name, device.state);
 
 		var deferred = q.defer();
 
@@ -316,10 +316,10 @@ module.exports = pulse;
 			},
 			function(err){
 				if(err){
-					console.log((new Date()).toLocaleString() + ' Pulse: Device State Failure');
+					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Device State Failure');
 					deferred.reject()
 				} else {
-					console.log((new Date()).toLocaleString() + ' Pulse: Device State Success');
+					console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Device State Success');
 					deferred.resolve();
 				}
 			}
@@ -343,7 +343,7 @@ module.exports = pulse;
 
 				// signed in?
 				if (body==null || body.includes("You have not yet signed in")){
-					console.log((new Date()).toLocaleString() + ' Pulse: error getting sat login timedout');
+					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: error getting sat login timedout');
 					deferred.reject();
 					return false;
 				}
@@ -354,7 +354,7 @@ module.exports = pulse;
 					deferred.resolve();
 				}
 				catch(e){
-						console.log((new Date()).toLocaleString() + ' Pulse: error getting sat cheerio ::'+ body + '::'+ e);
+						console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: error getting sat cheerio ::'+ body + '::'+ e);
 						deferred.reject();
 						return false;
 				}
@@ -368,7 +368,7 @@ module.exports = pulse;
 		// action.newstate
 		// action.prev_state
 
-		console.log((new Date()).toLocaleString() + ' Pulse.setAlarmState Setting Alarm Status');
+		console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState Setting Alarm Status');
 
 		var deferred = q.defer();
 		var that = this;
@@ -415,13 +415,13 @@ module.exports = pulse;
 			},
 			function(err, httpResponse, body) {
 				if(err){
-					console.log((new Date()).toLocaleString() + ' Pulse setAlarmState Failed with: '+ body );
+					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse setAlarmState Failed with: '+ body );
 					deferred.reject();
 				} else {
 					// when arming check if Some sensors are open or reporting motion
 					// need the new sat value;
 				if (action.newstate!="disarm" && action.isForced!=true && body.includes("Some sensors are open or reporting motion")){
-						console.log((new Date()).toLocaleString() + ' Pulse setAlarmState Some sensors are open. will force the alarm state');
+						console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse setAlarmState Some sensors are open. will force the alarm state');
 						newsat = body.match(/sat=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/)[1]; 
 						if (newsat) { 
 							sat = newsat;
@@ -435,11 +435,11 @@ module.exports = pulse;
 							// we failed?
 							// Arming Disarming states are captured. No need to call them failed.
 							if(!action.isForced && !body.includes("Disarming") && !body.includes("Arming")){
-									console.log((new Date()).toLocaleString() + ' Pulse setAlarmState Forced alarm state failed::'+ body + "::");
+									console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse setAlarmState Forced alarm state failed::'+ body + "::");
 									deferred.reject();
 							}
 					}
-					console.log((new Date()).toLocaleString() + ' Pulse setAlarmState Success. Forced?:'+ action.isForced);
+					console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse setAlarmState Success. Forced?:'+ action.isForced);
 					deferred.resolve(body);
 				}
 
@@ -452,7 +452,7 @@ module.exports = pulse;
 		console.log((new Date()).toLocaleString() + ' Pulse.pulse Spanning');
 
 		if(this.clients.indexOf(uid) >= 0){
-			console.log((new Date()).toLocaleString() + ' Pulse: Client Lost', uid);
+			console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Client Lost', uid);
 			this.clients.splice(this.clients.indexOf(uid),1)
 		} else {
 			console.log((new Date()).toLocaleString() + ' Pulse: New Client', uid);
@@ -477,7 +477,7 @@ module.exports = pulse;
 					console.log((new Date()).toLocaleString() + ' Pulse.Sync: Syncing', body);
 					if(err || !body || body.indexOf("<html") > -1){
 						that.authenticated = false;
-						console.log((new Date()).toLocaleString() + ' Pulse.Sync: Sync Failed');
+						console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.Sync: Sync Failed');
 					} else if (lastsynckey != body|| "1-0-0" == body) {
 						lastsynckey = body;
 						that.updateAll.call(that);
@@ -485,7 +485,7 @@ module.exports = pulse;
 				})
 			})
 		} else {
-				console.log((new Date()).toLocaleString() + ' Pulse.Sync: Sync stuck?');
+				console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.Sync: Sync stuck?');
 		}
 	}
 }).call(pulse.prototype);
