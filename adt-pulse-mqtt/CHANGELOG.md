@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.11
+
+- Added colorization to log output
+- Cleaned up some log output
+
 ## 3.1.10
 
 - Fixed a couple of typos in log output
