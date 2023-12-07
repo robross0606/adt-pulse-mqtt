@@ -232,7 +232,7 @@ module.exports = pulse;
 
 						});
 
-							console.log((new Date().toLocaleString()) + 'ADT Pulse: Get zone status (via orb) success.');
+							console.log((new Date().toLocaleString()) + ' ADT Pulse: Get zone status (via orb) success.');
 							output.forEach(function(obj){
 								var s = obj;
 								console.log((new Date().toLocaleString()) + ' Sensor: ' + s.id + ' Name: ' + s.name + ' Tags: ' + s.tags + ' State ' + s.state);
