@@ -74,7 +74,7 @@ client.on('message', function (topic, message) {
   else if (msg=="arm_away") {
     action = {'newstate':'away','prev_state':prev_state};
   }  else{ // I don't know this mode #5
-      console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString()+" Unsupportated state requested:"+msg);
+      console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString()+" Unsupported state requested:"+msg);
       return;
   }
 
@@ -97,7 +97,7 @@ myAlarm.onStatusUpdate(
 
       // smartthings bridge has no typical alarm device with stay|away|alarm|home status.
       // we'll re-use the "alarm" and map strobe|siren|both|off to stay|away|alarm|home
-      // Sorry I'm too lazy to write my own smartthngs bridge for now.
+      // Sorry I'm too lazy to write my own smartthings bridge for now.
 
       if (status.includes('disarmed')) {
           mqtt_state = "disarmed";
