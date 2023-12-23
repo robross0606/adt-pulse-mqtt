@@ -111,6 +111,40 @@ The possible state values are:
 
 If a device type is not listed, open an issue containing your MQTT dump which lists your zones.
 
+## Docker Compose
+If you want to run this add-on independently using Docker, here is a sample Docker Compose file:
+
+```
+version: '3'
+services:
+   pulse-adt-mqtt:
+      container_name: pulse-adt-mqtt
+      image: adtpulsemqtt/adt-pulse-mqtt
+      network_mode: host
+      restart: always
+      volumes:
+       - /local/path/to/config-directory:/data~~
+```
+Sample config.json placed in the config-directory:
+```
+{
+    "pulse_login" : {
+        "username": "username",
+        "password": "password"
+    },
+    "mqtt_host" : "mqtt_host"
+    "mqtt_connect_options" :  {
+      "username" : "username",
+      "password" : "password",
+      },
+    "alarm_state_topic": "home/alarm/state",
+    "alarm_command_topic": "home/alarm/cmd",
+    "zone_state_topic": "adt/zone",
+    "smartthings_topic": "smartthings",
+    "smartthings": false
+}
+```
+
 ## ~~Smartthings Support~~ - No Longer Valid Since Smartthings Depricated Groovy IDE
 
 * ~~In Hassio, setting of the ADT Pulse MQTT set~~
@@ -130,37 +164,4 @@ https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/smartapps/haruny/AD
 1. ~~Run the SmartApp in your mobile application. Follow the instructions. Do not rename ADT Alarm System device created by the app. Multiple alarm systems/locations is not supported.~~
 1. ~~In MQTT Bridge app, select all the devices created (Alarm system, contacts, motion etc.)~~
 
-## ~~Docker Compose~~
-~~If you want to run this add-on independently using Docker, here is a sample Docker Compose file:~~
-<strike>
-```
-version: '3'
-services:
-   pulse-adt-mqtt:
-      container_name: pulse-adt-mqtt
-      image: adtpulsemqtt/adt-pulse-mqtt
-      network_mode: host
-      restart: always
-      volumes:
-       - /local/path/to/config-directory:/data~~
-```
-~~Sample config.json placed in the config-directory:~~
-```
-{
-    "pulse_login" : {
-        "username": "username",
-        "password": "password"
-    },
-    "mqtt_host" : "mqtt_host"
-    "mqtt_connect_options" :  {
-      "username" : "username",
-      "password" : "password",
-      },
-    "alarm_state_topic": "home/alarm/state",
-    "alarm_command_topic": "home/alarm/cmd",
-    "zone_state_topic": "adt/zone",
-    "smartthings_topic": "smartthings",
-    "smartthings": false
-}
-```
-</strike>
+
