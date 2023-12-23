@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.12
+
+- Dependency Updates
+- Homogenized log output to be more uniform across all log output messages
+- Fine tuned colorization in log output
+- Cleaned up some additional log output
+- Fixed some additional typos in log output
+
 ## 3.1.11
 
 - Added colorization to log output
