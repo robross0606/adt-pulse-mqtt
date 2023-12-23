@@ -67,7 +67,7 @@ module.exports = pulse;
 		if(this.authenticated){
 			deferred.resolve()
 		} else {
-			console.log((new Date()).toLocaleString()+' Pulse: Login called Authenticating');
+			console.log((new Date()).toLocaleString()+' Pulse: Login Called, Authenticating');
 
 			j = request.jar();
 
@@ -84,19 +84,19 @@ module.exports = pulse;
 				function(e, hResp) {
 					// expecting /myhome/VERSION/access/signin.jsp
 					if (hResp==null){
-							console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Authentication bad response error:'+JSON.stringify(e));
+							console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Authentication Bad Response Error - '+JSON.stringify(e));
 							that.authenticated =false;
 							that.isAuthenticating = false;
 							deferred.reject();
 							return deferred.promise;
 					}
-					console.log((new Date()).toLocaleString() + ' Pulse: Authentication Received Pathname: '+hResp.request.uri.pathname);
+					console.log((new Date()).toLocaleString() + ' Pulse: Authentication Received Pathname - '+hResp.request.uri.pathname);
 
 					var uriPart = hResp.request.uri.pathname.match(/\/myhome\/(.+?)\/access/)[1];
-					console.log((new Date()).toLocaleString() + ' Pulse: Authentication Page Version: '+uriPart);
+					console.log((new Date()).toLocaleString() + ' Pulse: Authentication Page Version - '+uriPart);
 					that.config.prefix= '/myhome/'+uriPart;
-					console.log((new Date()).toLocaleString() + ' Pulse: Authentication New URL Prefix '+ that.config.prefix);
-					console.log((new Date()).toLocaleString() + ' Pulse: Authentication Calling '+ that.config.baseUrl+that.config.prefix+that.config.authURI);
+					console.log((new Date()).toLocaleString() + ' Pulse: Authentication New URL Prefix - '+ that.config.prefix);
+					console.log((new Date()).toLocaleString() + ' Pulse: Authentication Calling - '+ that.config.baseUrl+that.config.prefix+that.config.authURI);
 					request.post(that.config.baseUrl+that.config.prefix+that.config.authURI,
 						{
 							followAllRedirects: true,
@@ -117,7 +117,7 @@ module.exports = pulse;
 							if(err || httpResponse.request.path !== that.config.prefix+that.config.summaryURI){
 								that.authenticated = false;
 								console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Authentication Failed');
-								console.log("\x1b[41m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: httpResponse: ' + JSON.stringify(httpResponse));
+								console.log("\x1b[41m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: httpResponse - ' + JSON.stringify(httpResponse));
 								deferred.reject();
 							} else {
 								that.authenticated = true;
@@ -164,7 +164,7 @@ module.exports = pulse;
 	},
 
 	this.getZoneStatusOrb = function() {
-		console.log((new Date()).toLocaleString() + ' Pulse.getZoneStatus(via Orb): Getting Zone Statuses');
+		console.log((new Date()).toLocaleString() + ' Pulse.getZoneStatus (via Orb): Getting Zone Statuses');
 		var deferred = q.defer();
 		request(
 			{
@@ -232,16 +232,16 @@ module.exports = pulse;
 
 						});
 
-							console.log("\x1b[32m%s\x1b[0m",(new Date().toLocaleString()) + ' ADT Pulse: Get zone status (via orb) success.');
+							console.log("\x1b[32m%s\x1b[0m",(new Date().toLocaleString()) + ' ADT Pulse: Get Zone Status (via Orb) Success');
 							output.forEach(function(obj){
 								var s = obj;
-								console.log("\x1b[1m\x1b[32m%s\x1b[0m", (new Date().toLocaleString()) + ' Sensor: ' + s.id + ' Name: ' + s.name + ' Tags: ' + s.tags + ' State: ' + s.state);
+								console.log("\x1b[42m%s\x1b[0m", (new Date().toLocaleString()) + ' Sensor: ' + s.id + ' Name: ' + s.name + ' Tags: ' + s.tags + ' State: ' + s.state);
 								zoneUpdateCB(s);
 							})
 						var newsat = body.match(/sat=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/)[1]; 
 						if (newsat) { 
 							sat = newsat;
-							console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse setAlarmState New SAT ::'+ sat + "::");
+							console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: New SAT - ::'+ sat + "::");
 						}
 					}
 				}
@@ -272,12 +272,12 @@ module.exports = pulse;
 							})
 						}
 						catch (e) {
-							console.log("\x1b[34m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.getDeviceStatus: No other devices found');
+							console.log("\x1b[34m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.getDeviceStatus: No Other Devices Found');
 						}
 					})
 				}
 				catch(e){
-					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.getDeviceStatus failed: ::'+body+"::");
+					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.getDeviceStatus: Failed - ::'+body+"::");
 				}
 			}
 		);
@@ -295,7 +295,7 @@ module.exports = pulse;
 
 	// not tested
 	this.deviceStateChange = function (device) {
-		console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.deviceStateChange: Device State Change ', device.name, device.state);
+		console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.deviceStateChange: Device State Change - ', device.name, device.state);
 
 		var deferred = q.defer();
 
@@ -343,7 +343,7 @@ module.exports = pulse;
 
 				// signed in?
 				if (body==null || body.includes("You have not yet signed in")){
-					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: error getting sat login, timed out');
+					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Error Getting SAT Login, Timed Out');
 					deferred.reject();
 					return false;
 				}
@@ -354,7 +354,7 @@ module.exports = pulse;
 					deferred.resolve();
 				}
 				catch(e){
-						console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: error getting sat cheerio ::'+ body + '::'+ e);
+						console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Error Getting SAT Cheerio - ::'+ body + '::'+ e);
 						deferred.reject();
 						return false;
 				}
@@ -402,7 +402,7 @@ module.exports = pulse;
 				}
 		}
 
-		console.log((new Date()).toLocaleString() + ' Pulse.setAlarmState: calling the url - ' + url);
+		console.log((new Date()).toLocaleString() + ' Pulse.setAlarmState: Calling the URL - ' + url);
 
 		request(
 			{
@@ -415,7 +415,7 @@ module.exports = pulse;
 			},
 			function(err, httpResponse, body) {
 				if(err){
-					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Failed with - '+ body );
+					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Failed With - '+ body );
 					deferred.reject();
 				} else {
 					// when arming check if Some sensors are open or reporting motion
@@ -425,7 +425,7 @@ module.exports = pulse;
 						newsat = body.match(/sat=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/)[1]; 
 						if (newsat) { 
 							sat = newsat;
-							console.log((new Date()).toLocaleString() + ' Pulse.setAlarmState: New SAT ::'+ sat + "::");
+							console.log((new Date()).toLocaleString() + ' Pulse.setAlarmState: New SAT - ::'+ sat + "::");
 						}
 						action.isForced=true;
 						that.setAlarmState(action);
@@ -435,11 +435,11 @@ module.exports = pulse;
 							// we failed?
 							// Arming Disarming states are captured. No need to call them failed.
 							if(!action.isForced && !body.includes("Disarming") && !body.includes("Arming")){
-									console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Forced alarm state failed ::'+ body + "::");
+									console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Forced Alarm State Failed - ::'+ body + "::");
 									deferred.reject();
 							}
 					}
-					console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Success. Forced?: '+ action.isForced);
+					console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Success. Forced? - '+ action.isForced);
 					deferred.resolve(body);
 				}
 
@@ -485,7 +485,7 @@ module.exports = pulse;
 				})
 			})
 		} else {
-				console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.sync: Sync stuck?');
+				console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.sync: Sync Stuck?');
 		}
 	}
 }).call(pulse.prototype);
