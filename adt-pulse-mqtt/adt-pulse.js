@@ -220,7 +220,7 @@ module.exports = pulse;
 							 *        devStatAlarm (detected CO/Smoke)
 							 *        devStatUnknown (device offline)
 							 */
-							var timestamp = Math.floor(Date.now() / 1000) // timetamp in seconds
+							var timestamp = Math.floor(Date.now() / 1000) // timestamp in seconds
 
 							return {
 								id: `sensor-${theZoneNumber}`,

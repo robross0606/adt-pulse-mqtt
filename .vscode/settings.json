@@ -1,11 +1,22 @@
 {
     "cSpell.words": [
+        "adtpulse",
         "adtpulsemqtt",
+        "armstate",
+        "forcearm",
         "fullchain",
         "keyfile",
+        "KHTML",
+        "lastsynckey",
         "mosquitto",
+        "myhome",
+        "newsat",
         "newstate",
         "privkey",
+        "quickcontrol",
+        "serv",
+        "signin",
+        "signout",
         "smartthings"
     ]
 }
