@@ -9,6 +9,7 @@
   "boot": "auto",
   "host_network" : false,
   "arch": [
+    "aarch64",
     "armhf",
     "amd64"
   ],
