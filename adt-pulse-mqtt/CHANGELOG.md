@@ -7,6 +7,7 @@
 - Fine tuned colorization in log output
 - Cleaned up some additional log output
 - Fixed some additional typos in log output
+- Added aarch64 support
 
 ## 3.1.11
 
