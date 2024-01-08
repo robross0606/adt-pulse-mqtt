@@ -2,8 +2,8 @@ name: Builder
 
 env:
   BUILD_ARGS: "--test"
-  #MONITORED_FILES: "build.json config.json Dockerfile rootfs"
-  MONITORED_FILES: "build.yaml config.yaml Dockerfile rootfs"
+  MONITORED_FILES: "build.json config.json Dockerfile rootfs"
+  #MONITORED_FILES: "build.yaml config.yaml Dockerfile rootfs"
 
 on:
   workflow_dispatch:
@@ -19,9 +19,9 @@ on:
   #  workflows: ["Lint"]    
   #  types: [completed]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+#concurrency:
+#  group: ${{ github.workflow }}-${{ github.ref }}
+#  cancel-in-progress: true
 
 jobs:
   init:
@@ -75,7 +75,7 @@ jobs:
     strategy:
       matrix:
         addon: ${{ fromJson(needs.init.outputs.changed_addons) }}
-        arch: ["amd64", "armhf"]
+        arch: ["amd64", "armhf", "arm64"]
 
     steps:
       - name: Check out repository
