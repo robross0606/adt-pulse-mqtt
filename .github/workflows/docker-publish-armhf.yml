@@ -67,7 +67,7 @@ jobs:
         with:
           images: |
             bigthundersr/adt-pulse-mqtt-armhf
-            #ghcr.io/bigthundersr/adt-pulse-mqtt-armhf
+            ghcr.io/bigthundersr/adt-pulse-mqtt-armhf
           flavor: |
             latest=true
           tags: |
@@ -103,5 +103,6 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
+          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=ADT Pulse bridge for Home Assistant using MQTT
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
