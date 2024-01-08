@@ -70,12 +70,12 @@ jobs:
             bigthundersr/adt-pulse-mqtt
             bigthundersr/adt-pulse-mqtt-amd64
             ghcr.io/bigthundersr/adt-pulse-mqtt
-            ghcr.io/bigthundersr/adt-pulse-mqtt-amd64
+            #ghcr.io/bigthundersr/adt-pulse-mqtt-amd64
           flavor: |
             latest=true
           tags: |
             type=semver,pattern={{version}}
-            #type=sha            
+            type=sha            
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
