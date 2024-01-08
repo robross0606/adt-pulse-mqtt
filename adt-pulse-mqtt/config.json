@@ -17,7 +17,7 @@
     "share:rw",
     "ssl"
   ],
-  "image": "bigthundersr/adt-pulse-mqtt-{arch}",
+  "image": "ghcr.io/bigthundersr/adt-pulse-mqtt-{arch}",
   "options": {
       "ssl": false,
       "certfile": "fullchain.pem",
@@ -45,14 +45,14 @@
       "keyfile": "str",
       "pulse_login" : {
         "username": "str",
-        "password": "str",
-        "fingerprint": "str"
+        "password": "password",
+        "fingerprint": "password"
       },
        "mqtt_host" : "str",
 	     "mqtt_url" : "str?",
        "mqtt_connect_options" : {
          "username" : "str",
-         "password" : "str"
+         "password" : "password"
       },
       "alarm_state_topic" : "str",
       "alarm_command_topic": "str",

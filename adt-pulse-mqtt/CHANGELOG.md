@@ -3,6 +3,7 @@
 ## 3.1.13
 
 - Dependency Updates
+- Moved image install location to GHCR
 
 ## 3.1.12
 
