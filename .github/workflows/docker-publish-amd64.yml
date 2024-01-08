@@ -18,6 +18,7 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   test:
     runs-on: ubuntu-latest
+    permissions: write-all
 
     steps:
       - uses: actions/checkout@v4
@@ -102,8 +103,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./adt-pulse-mqtt/
-          file: ./adt-pulse-mqtt/Dockerfile
-          #file: ./adt-pulse-mqtt/Dockerfile-amd64
+          #file: ./adt-pulse-mqtt/Dockerfile
+          file: ./adt-pulse-mqtt/Dockerfile-amd64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
