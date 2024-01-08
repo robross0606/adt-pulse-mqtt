@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.13
+
+- Dependency Updates
+
 ## 3.1.12
 
 - Dependency Updates
