@@ -1,4 +1,4 @@
-name: Docker - amd64
+name: Docker - GHCR
 
 on:
   push:
@@ -67,10 +67,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            bigthundersr/adt-pulse-mqtt
-            bigthundersr/adt-pulse-mqtt-amd64
-            #ghcr.io/bigthundersr/adt-pulse-mqtt
-            ghcr.io/bigthundersr/adt-pulse-mqtt-amd64
+            #bigthundersr/adt-pulse-mqtt
+            #bigthundersr/adt-pulse-mqtt-amd64
+            ghcr.io/bigthundersr/adt-pulse-mqtt
+            #ghcr.io/bigthundersr/adt-pulse-mqtt-amd64
           flavor: |
             latest=true
           tags: |
@@ -103,8 +103,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./adt-pulse-mqtt/
-          #file: ./adt-pulse-mqtt/Dockerfile
-          file: ./adt-pulse-mqtt/Dockerfile-amd64
+          file: ./adt-pulse-mqtt/Dockerfile
+          #file: ./adt-pulse-mqtt/Dockerfile-amd64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
