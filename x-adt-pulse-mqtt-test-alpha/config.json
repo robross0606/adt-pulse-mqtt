@@ -1,6 +1,6 @@
 {
   "name": "ADT Pulse MQTT - BigThunderSR Test - Alpha",
-  "version": "3.1.14",
+  "version": "3.2.0",
   "slug": "x_adtpulsemqtt_bigthundersr_test_alpha",
   "description": "ADT Pulse Bridge using MQTT",
   "codenotary": "bigthundersr@outlook.com",
