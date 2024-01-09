@@ -1,0 +1,63 @@
+{
+  "name": "ADT Pulse MQTT - BigThunderSR",
+  "version": "3.1.14",
+  "slug": "adtpulsemqtt_bigthundersr",
+  "description": "ADT Pulse Bridge using MQTT",
+  "codenotary": "bigthundersr@outlook.com",
+  "url":"https://github.com/BigThunderSR/adt-pulse-mqtt",
+  "startup": "application",
+  "boot": "auto",
+  "host_network" : false,
+  "arch": [
+    "aarch64",
+    "armhf",
+    "amd64"
+  ],
+  "map": [
+    "share:rw",
+    "ssl"
+  ],
+  "image": "ghcr.io/bigthundersr/adt-pulse-mqtt-{arch}",
+  "options": {
+      "ssl": false,
+      "certfile": "fullchain.pem",
+      "keyfile": "privkey.pem",
+      "pulse_login" : {
+        "username": "",
+        "password": "",
+        "fingerprint": ""
+      },
+      "mqtt_host" : "core-mosquitto",
+	  "mqtt_url" : "",
+	  "mqtt_connect_options" :  {
+        "username" : "",
+        "password" : ""
+      },
+      "alarm_state_topic": "home/alarm/state",
+      "alarm_command_topic": "home/alarm/cmd",
+      "zone_state_topic": "adt/zone",
+      "smartthings_topic": "smartthings",
+      "smartthings": false
+    },
+    "schema": {
+      "ssl": "bool",
+      "certfile": "str",
+      "keyfile": "str",
+      "pulse_login" : {
+        "username": "str",
+        "password": "password",
+        "fingerprint": "password"
+      },
+       "mqtt_host" : "str",
+	     "mqtt_url" : "str?",
+       "mqtt_connect_options" : {
+         "username" : "str",
+         "password" : "password"
+      },
+      "alarm_state_topic" : "str",
+      "alarm_command_topic": "str",
+      "zone_state_topic": "str",
+      "smartthings_topic": "str",
+      "smartthings": "bool"
+    }
+}
