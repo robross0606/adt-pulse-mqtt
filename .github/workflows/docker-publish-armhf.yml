@@ -67,7 +67,7 @@ jobs:
         with:
           images: |
             bigthundersr/adt-pulse-mqtt-armhf
-            ghcr.io/bigthundersr/adt-pulse-mqtt-armhf
+            #ghcr.io/bigthundersr/adt-pulse-mqtt-armhf
           flavor: |
             latest=true
           tags: |
