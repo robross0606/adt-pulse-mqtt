@@ -1,5 +1,5 @@
 {
-  "name": "ADT Pulse MQTT - BigThunderSR",
+  "name": "ADT Pulse MQTT - BigThunderSR - Test",
   "version": "3.1.14",
   "slug": "adtpulsemqtt_bigthundersr",
   "description": "ADT Pulse Bridge using MQTT",
@@ -17,7 +17,7 @@
     "share:rw",
     "ssl"
   ],
-  "image": "ghcr.io/bigthundersr/adt-pulse-mqtt-{arch}",
+  "image": "ghcr.io/bigthundersr/adt-pulse-mqtt-test-{arch}",
   "options": {
       "ssl": false,
       "certfile": "fullchain.pem",
