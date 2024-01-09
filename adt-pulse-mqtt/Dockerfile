@@ -27,7 +27,7 @@ CMD [ "/run.sh" ]
 #  Labels 
 
 ARG BUILD_DESCRIPTION="ADT Pulse bridge for Home Assistant using MQTT"
-ARG BUILD_NAME="ADT Pulse bridge for Home Assistant using MQTT"
+ARG BUILD_NAME="ADT Pulse bridge for Home Assistant using MQTT Node18"
 ARG BUILD_REPOSITORY="BigThunderSR/adt-pulse-mqtt"
 
 LABEL \
