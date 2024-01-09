@@ -1,10 +1,5 @@
 # Changelog
 
-## 3.1.14
-
-- Dependency Updates
-- Use HA Builder
-
 ## 3.1.13
 
 - Dependency Updates
