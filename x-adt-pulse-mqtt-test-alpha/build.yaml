@@ -1,5 +1,5 @@
 ---
-squash: false
+#squash: false
 build_from:
   aarch64: balenalib/aarch64-alpine:3.18-run
   amd64: balenalib/amd64-alpine:3.18-run
