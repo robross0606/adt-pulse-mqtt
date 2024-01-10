@@ -1,3 +1,13 @@
+[![Home Assistant Add-on](https://img.shields.io/badge/home_assistant-add--on-blue.svg?logo=homeassistant&logoColor=white)](https://github.com/BigThunderSR/adt-pulse-mqtt)
+![Supports aarch64 Architecture][aarch64-shield]
+![Supports amd64 Architecture][amd64-shield]
+![Supports armhf Architecture][armhf-shield]
+
+[![CodeQL](https://github.com/BigThunderSR/adt-pulse-mqtt/actions/workflows/codeql.yml/badge.svg)](https://github.com/BigThunderSR/adt-pulse-mqtt/actions/workflows/codeql.yml)
+[![Lint](https://github.com/BigThunderSR/adt-pulse-mqtt/actions/workflows/lint.yaml/badge.svg)](https://github.com/BigThunderSR/adt-pulse-mqtt/actions/workflows/lint.yaml)
+[![Node.js CI](https://github.com/BigThunderSR/adt-pulse-mqtt/actions/workflows/node.js.yml/badge.svg)](https://github.com/BigThunderSR/adt-pulse-mqtt/actions/workflows/node.js.yml)
+[![Builder](https://github.com/BigThunderSR/adt-pulse-mqtt/actions/workflows/builder.yaml/badge.svg)](https://github.com/BigThunderSR/adt-pulse-mqtt/actions/workflows/builder.yaml)
+
 # adt-pulse-mqtt
 ADT Pulse bridge for Home Assistant using MQTT. 
 
@@ -165,3 +175,8 @@ https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/smartapps/haruny/AD
 1. ~~In MQTT Bridge app, select all the devices created (Alarm system, contacts, motion etc.)~~
 
 
+[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
+[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
+[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
+[i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
