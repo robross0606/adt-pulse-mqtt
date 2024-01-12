@@ -18,8 +18,8 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package.json .
-RUN npm install --production
-#RUN npm ci --omit=dev --no-fund
+#RUN npm install --production
+RUN npm install --omit=dev --no-fund
 
 # Bundle app source
 COPY . .
