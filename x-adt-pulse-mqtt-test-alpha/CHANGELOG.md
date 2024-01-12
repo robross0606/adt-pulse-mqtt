@@ -3,6 +3,7 @@
 ## 3.2.0
 
 - Update base image to balenalib/{arch}-alpine:3.18-run
+- Use node 18
 
 ## 3.1.14
 
