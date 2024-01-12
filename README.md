@@ -129,7 +129,7 @@ version: '3'
 services:
    pulse-adt-mqtt:
       container_name: pulse-adt-mqtt
-      image: adtpulsemqtt/adt-pulse-mqtt
+      image: bigthundersr/adt-pulse-mqtt
       network_mode: host
       restart: always
       volumes:
