@@ -21,7 +21,7 @@ COPY ["package.json", "/user/src/app/"]
 # COPY ["package-lock.json", "/user/src/app/"]
 
 # RUN npm install --production
-RUN npm i --omit=dev --no-fund
+RUN npm install --omit=dev --no-fund
 
 # Bundle app source
 COPY . .
