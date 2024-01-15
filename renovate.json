@@ -11,6 +11,8 @@
     { 
      "matchManagers": ["npm"],
      "addLabels": ["javascript"],
+     "matchLanguages":["javascript"],
+     "addLabels": ["javascript"]
      "matchManagers": ["github-actions"],
      "addLabels": ["github_actions"],
      "matchPackagePatterns": ["dockerfile"],
