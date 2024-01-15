@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.2.1
+
+- Dependency updates
+- Housekeeping on Dockerfiles - Did some cleanup and set app to actually use WORKDIR instead of root.
+
 ## 3.2.0
 
 - Update base image to balenalib/{arch}-alpine:3.18-run
