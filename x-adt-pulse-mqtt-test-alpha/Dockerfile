@@ -17,8 +17,8 @@ RUN apk add --no-cache \
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY ["package.json", "/user/src/app/"]
-# COPY ["package-lock.json", "/user/src/app/"]
+COPY ["package.json", "."]
+# COPY ["package-lock.json", "."]
 
 # RUN npm install --production
 RUN npm install --omit=dev --no-fund
