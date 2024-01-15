@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.1
+
+- Testing
+
 ## 3.2.0
 
 - Update base image to balenalib/{arch}-alpine:3.18-run
