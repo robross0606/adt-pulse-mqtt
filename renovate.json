@@ -24,6 +24,5 @@
      "matchPackagePatterns": ["dockerfile"],
      "appendLabels": ["dockerfile"]
     }
-    
-  ]
+    ]
 }
