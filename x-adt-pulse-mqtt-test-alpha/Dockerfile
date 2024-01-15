@@ -17,17 +17,17 @@ RUN apk add --no-cache \
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY ["package.json", "/usr/src/app"]
-COPY ["package-lock.json", "/usr/src/app"]
+COPY ["package.json", "/usr/src/app/"]
+COPY ["package-lock.json", "/usr/src/app/"]
 
 # RUN npm install --production
 RUN npm ci --omit=dev --no-fund
 
 # Bundle app source
-COPY . /usr/src/app
+COPY . /usr/src/app/
 
 # Copy data for add-on
-COPY run.sh /usr/src/app
+COPY run.sh /usr/src/app/
 RUN chmod a+x /usr/src/app/run.sh
 
 CMD [ "/usr/src/app/run.sh" ]
