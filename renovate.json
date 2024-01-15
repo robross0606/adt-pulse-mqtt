@@ -3,7 +3,7 @@
   "extends": [
     "config:recommended"
   ],
-  "recreateClosed": true, 
+#  "recreateClosed": true, 
   "labels": [
     "Renovate",
     "dependencies"
