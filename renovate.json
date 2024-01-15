@@ -11,7 +11,7 @@
     { 
      "matchManagers": ["npm"],
      "addLabels": ["javascript"],
-     "matchLanguages":["javascript"],
+     "matchLanguages":["js"],
      "addLabels": ["javascript"],
      "matchManagers": ["github-actions"],
      "addLabels": ["github_actions"],
