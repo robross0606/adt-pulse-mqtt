@@ -12,30 +12,34 @@ RUN [ "cross-build-start" ]
 #RUN apk add --update nodejs-npm=~14
 
 # Install node and npm (Node 18 LTS)
-RUN apk add --update nodejs=~18
-RUN apk add --update npm
+RUN apk add --no-cache \
+    nodejs \
+    npm
 
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package.json .
-RUN /usr/bin/npm install
+COPY ["package.json", "/usr/src/app/"]
+COPY ["package-lock.json", "/usr/src/app/"]
+
+# RUN npm install --production
+RUN npm ci --omit=dev --no-fund
 
 # Bundle app source
-COPY . .
+COPY ./ /usr/src/app/
 
 # Copy data for add-on
-COPY run.sh /
-RUN chmod a+x /run.sh  
+COPY run.sh /usr/src/app/
+RUN chmod a+x /usr/src/app/run.sh
 
 RUN [ "cross-build-end" ]
 
-CMD [ "/run.sh" ]
+CMD [ "/usr/src/app/run.sh" ]
 
 #  Labels 
 
 ARG BUILD_DESCRIPTION="ADT Pulse bridge for Home Assistant using MQTT"
-ARG BUILD_NAME="ADT Pulse bridge for Home Assistant using MQTT Node18"
+ARG BUILD_NAME="ADT Pulse bridge for Home Assistant using MQTT - aarch64"
 ARG BUILD_REPOSITORY="BigThunderSR/adt-pulse-mqtt"
 
 LABEL \
