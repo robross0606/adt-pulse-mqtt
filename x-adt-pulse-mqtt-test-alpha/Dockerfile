@@ -18,10 +18,10 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY ["package.json", "/user/src/app/"]
-COPY ["package-lock.json", "/user/src/app/"]
+# COPY ["package-lock.json", "/user/src/app/"]
 
 # RUN npm install --production
-RUN npm ci --omit=dev --no-fund
+RUN npm i --omit=dev --no-fund
 
 # Bundle app source
 COPY . .
