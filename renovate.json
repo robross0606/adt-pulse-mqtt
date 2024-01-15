@@ -11,15 +11,25 @@
   "packageRules": [
     { 
      "matchManagers": ["npm"],
-     "addLabels": ["javascript"],
+     "addLabels": ["javascript"]
+    },
+    {
      "matchLanguages":["js"],
-     "addLabels": ["javascript"],
+     "addLabels": ["javascript"]
+    },
+    {
      "matchManagers": ["github-actions"],
-     "addLabels": ["github_actions"],
+     "addLabels": ["github_actions"]
+    },
+    {
      "matchManagers": ["dockerfile"],
-     "addLabels": ["dockerfile"],
+     "addLabels": ["dockerfile"]
+    },
+    {
      "matchPackagePatterns": ["dockerfile"],
-     "addLabels": ["dockerfile"],
+     "addLabels": ["dockerfile"]
+    },
+    {
      "matchManagers": ["nvm"],
      "addLabels": ["nvm"] 
     }  
