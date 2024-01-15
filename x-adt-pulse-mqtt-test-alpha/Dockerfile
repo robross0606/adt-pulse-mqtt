@@ -20,7 +20,7 @@ WORKDIR /usr/src/app
 COPY ["package.json", "/user/src/app/"]
 COPY ["package-lock.json", "/user/src/app/"]
 
-#RUN npm install --production
+# RUN npm install --production
 RUN npm ci --omit=dev --no-fund
 
 # Bundle app source
