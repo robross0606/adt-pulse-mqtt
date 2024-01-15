@@ -9,20 +9,14 @@
   ],
   "packageRules": [
     { 
-     "matchLanguages": ["javascript"],
-     "addLabel": ["javascript"]
-    },
-    {
+     "matchManagers": ["npm"],
+     "addLabels": ["javascript"],
      "matchManagers": ["github-actions"],
-     "addLabel": ["github_actions"]
-    },
-    {
-     "matchManagers": ["nvm"],
-     "addLabel": ["nvm"]
-    },
-    {
+     "addLabels": ["github_actions"],
      "matchPackagePatterns": ["dockerfile"],
-     "addLabel": ["dockerfile"]
-    }
-   ]
+     "addLabels": ["dockerfile"],
+     "matchManagers": ["nvm"],
+     "addLabels": ["nvm"] 
+    }  
+  ]
 }
