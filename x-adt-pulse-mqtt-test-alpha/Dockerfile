@@ -24,7 +24,7 @@ COPY ["package-lock.json", "/usr/src/app/"]
 RUN npm ci --omit=dev --no-fund
 
 # Bundle app source
-COPY . /usr/src/app/
+COPY ./ /usr/src/app/
 
 # Copy data for add-on
 COPY run.sh /usr/src/app/
