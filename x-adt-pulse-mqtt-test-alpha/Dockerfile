@@ -18,7 +18,7 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY ["package.json", "."]
-# COPY ["package-lock.json", "."]
+COPY ["package-lock.json", "."]
 
 # RUN npm install --production
 RUN npm install --omit=dev --no-fund
