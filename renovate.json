@@ -12,15 +12,15 @@
      "matchManagers": ["npm"],
      "addLabel": ["javascript"]
     },
-    }
+    {
      "matchManagers": ["github-actions"],
      "addLabel": ["github_actions"]
     },
-    }
+    {
      "matchManagers": ["nvm"],
      "addLabel": ["nvm"]
     },
-    }
+    {
      "matchPackagePatterns": ["dockerfile"],
      "addLabel": ["dockerfile"]
     }
