@@ -1,4 +1,4 @@
-name: Docker - aarch64
+name: Docker Hub - aarch64
 
 on:
   push:
