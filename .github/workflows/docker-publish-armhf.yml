@@ -1,4 +1,4 @@
-name: Docker - armhf
+name: Docker Hub - armhf
 
 on:
   push:
