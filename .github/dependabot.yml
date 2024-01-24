@@ -11,18 +11,18 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 20
-#  - package-ecosystem: "npm"
-#    directory: "/adt-pulse-mqtt"
-#    schedule:
-#      interval: "daily"
-#    open-pull-requests-limit: 20
+  - package-ecosystem: "npm"
+    directory: "/adt-pulse-mqtt"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 20
 #  - package-ecosystem: "npm"
 #    directory: "/adt-pulse-mqtt-test"
 #    schedule:
 #      interval: "daily"
 #    open-pull-requests-limit: 20
-  - package-ecosystem: "npm"
-    directory: "/x-adt-pulse-mqtt-test-alpha" 
-    schedule:
-      interval: "daily"
-    open-pull-requests-limit: 20
+#  - package-ecosystem: "npm"
+#    directory: "/x-adt-pulse-mqtt-test-alpha" 
+#    schedule:
+#      interval: "daily"
+#    open-pull-requests-limit: 20
