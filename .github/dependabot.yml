@@ -4,7 +4,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
@@ -12,5 +12,5 @@ updates:
   - package-ecosystem: "npm"
     directory: "/adt-pulse-mqtt"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     #open-pull-requests-limit: 10
