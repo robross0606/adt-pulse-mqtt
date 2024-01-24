@@ -10,7 +10,8 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "npm"
-    directory: "/adt-pulse-mqtt"
+    #directory: "/adt-pulse-mqtt"
+    directory: "/" 
     schedule:
       interval: "daily"
     #open-pull-requests-limit: 10
