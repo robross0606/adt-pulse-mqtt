@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.2
+
+- Testing
+
 ## 3.2.1
 
 - Testing
