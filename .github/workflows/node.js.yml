@@ -33,3 +33,7 @@ jobs:
       working-directory: adt-pulse-mqtt
     - run: npm test
       working-directory: adt-pulse-mqtt
+    - run: npx nyc --reporter=lcov npm test
+      working-directory: adt-pulse-mqtt
+    - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report --project-token ${{ secrets.CODACY_PROJECT_TOKEN }}
+      working-directory: adt-pulse-mqtt
