@@ -1,17 +1,17 @@
 'use strict';
 
 const chai  = require('chai');
-//const spies  = require('chai-spies');
-//const chaiAsPromised = require("chai-as-promised");
+const spies  = require('chai-spies');
+const chaiAsPromised = require("chai-as-promised");
 const rewire = require('rewire');
 const nock = require('nock');
 const fs = require('fs');
 //const { stringify } = require('querystring');
 
 // Set up chai, plugins
-//chai.use(spies);
-//chai.use(chaiAsPromised);
-//let expect = chai.expect;
+chai.use(spies);
+chai.use(chaiAsPromised);
+let expect = chai.expect;
 
 describe("ADT Pulse Default Initilization Tests",function() {
   // Setup
