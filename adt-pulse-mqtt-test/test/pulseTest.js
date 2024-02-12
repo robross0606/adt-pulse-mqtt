@@ -13,7 +13,7 @@ chai.use(spies);
 chai.use(chaiAsPromised);
 let expect = chai.expect;
 
-describe("ADT Pulse Default Initilization Tests",function() {
+describe("ADT Pulse Default Initialization Tests",function() {
   // Setup
   // Rewire adt-pulse module
   let pulse = rewire('../adt-pulse.js');  
