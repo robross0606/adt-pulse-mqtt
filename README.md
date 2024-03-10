@@ -155,7 +155,7 @@ Sample config.json placed in the config-directory:
 }
 ```
 
-## ~~Smartthings Support~~ - No Longer Valid Since Smartthings Depricated Groovy IDE
+## ~~Smartthings Support~~ - No Longer Valid Since Smartthings Deprecated Groovy IDE
 
 * ~~In Hassio, setting of the ADT Pulse MQTT set~~
 <strike>
