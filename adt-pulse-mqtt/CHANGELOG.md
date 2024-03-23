@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.3
+
+- Dependency updates
+
 ## 3.2.2
 
 - Dependency updates
