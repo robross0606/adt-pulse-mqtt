@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.5
+
+- Dependency Updates
+
 ## 3.1.15
 
 - Dependency Updates
