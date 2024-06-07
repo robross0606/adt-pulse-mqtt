@@ -73,6 +73,7 @@ mqtt:
        payload_arm_home: "arm_home"
        payload_arm_away: "arm_away"
        payload_disarm: "disarm"
+       code_arm_required: false 
 </pre>
 
 After running the add-on, get a list all the zones found. There are a couple of ways to do this, but they all involve subscribing to the wildcard topic "adt/zones/#".
