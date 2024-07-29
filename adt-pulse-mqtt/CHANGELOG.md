@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.2.7
+
+- Dependency updates
+- Replace 'q' module promises with native JS promises
+
 ## 3.2.6
 
 - Dependency updates
