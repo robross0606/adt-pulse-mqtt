@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.7
+
+- Test
+
 ## 3.2.6
 
 - Dependency Updates
