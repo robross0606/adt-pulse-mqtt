@@ -1,6 +1,6 @@
 // Forked from https://github.com/kevinmhickey/adt-pulse
 var request = require('request');
-var q = require('q');
+//var q = require('q');
 var cheerio = require('cheerio');
 var _ = require('lodash');
 
@@ -60,78 +60,77 @@ module.exports = pulse;
 	};
 
 	this.login = function () {
-
-		var deferred = q.defer();
-		var that = this;
-
-		if(this.authenticated){
-			deferred.resolve()
-		} else {
-			console.log((new Date()).toLocaleString()+' Pulse: Login Called, Authenticating');
-
-			j = request.jar();
-
-			that.isAuthenticating = true;
-			request(
-				{
-					url: this.config.baseUrl+this.config.initialURI, // call with no prefix to grab the prefix
-					jar: j,
-					headers: {
-						'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-						'User-Agent': ua
-					},
-				},
-				function(e, hResp) {
-					// expecting /myhome/VERSION/access/signin.jsp
-					if (hResp==null){
-							console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Authentication Bad Response Error - '+JSON.stringify(e));
-							that.authenticated =false;
-							that.isAuthenticating = false;
-							deferred.reject();
-							return deferred.promise;
-					}
-					console.log((new Date()).toLocaleString() + ' Pulse: Authentication Received Pathname - '+hResp.request.uri.pathname);
-
-					var uriPart = hResp.request.uri.pathname.match(/\/myhome\/(.+?)\/access/)[1];
-					console.log((new Date()).toLocaleString() + ' Pulse: Authentication Page Version - '+uriPart);
-					that.config.prefix= '/myhome/'+uriPart;
-					console.log((new Date()).toLocaleString() + ' Pulse: Authentication New URL Prefix - '+ that.config.prefix);
-					console.log((new Date()).toLocaleString() + ' Pulse: Authentication Calling - '+ that.config.baseUrl+that.config.prefix+that.config.authURI);
-					request.post(that.config.baseUrl+that.config.prefix+that.config.authURI,
-						{
-							followAllRedirects: true,
-							jar: j,
-							headers: {
-								'Host': 'portal.adtpulse.com',
-								'Referrer': that.config.baseUrl+that.config.prefix+that.config.authURI,
-								'User-Agent': ua
-							},
-							form:{
-								username: that.config.username,
-								password: that.config.password,
-								fingerprint: that.config.fingerprint
-							}
+		return new Promise((resolve, reject) => {
+			var that = this;
+	
+			if (this.authenticated) {
+				resolve();
+			} else {
+				console.log((new Date()).toLocaleString() + ' Pulse: Login Called, Authenticating');
+	
+				j = request.jar();
+	
+				that.isAuthenticating = true;
+				request(
+					{
+						url: this.config.baseUrl + this.config.initialURI, // call with no prefix to grab the prefix
+						jar: j,
+						headers: {
+							'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+							'User-Agent': ua
 						},
-						function(err, httpResponse){
+					},
+					function (e, hResp) {
+						// expecting /myhome/VERSION/access/signin.jsp
+						if (hResp == null) {
+							console.log("\x1b[31m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse: Authentication Bad Response Error - ' + JSON.stringify(e));
+							that.authenticated = false;
 							that.isAuthenticating = false;
-							if(err || httpResponse.request.path !== that.config.prefix+that.config.summaryURI){
-								that.authenticated = false;
-								console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Authentication Failed');
-								console.log("\x1b[41m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: httpResponse - ' + JSON.stringify(httpResponse));
-								deferred.reject();
-							} else {
-								that.authenticated = true;
-								console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Authentication Success');
-								deferred.resolve();
-								that.updateAll.call(that);
-							}
+							reject();
+							return;
 						}
-					);
-				}
-			);
-		}
-		return deferred.promise
-	},
+						console.log((new Date()).toLocaleString() + ' Pulse: Authentication Received Pathname - ' + hResp.request.uri.pathname);
+	
+						var uriPart = hResp.request.uri.pathname.match(/\/myhome\/(.+?)\/access/)[1];
+						console.log((new Date()).toLocaleString() + ' Pulse: Authentication Page Version - ' + uriPart);
+						that.config.prefix = '/myhome/' + uriPart;
+						console.log((new Date()).toLocaleString() + ' Pulse: Authentication New URL Prefix - ' + that.config.prefix);
+						console.log((new Date()).toLocaleString() + ' Pulse: Authentication Calling - ' + that.config.baseUrl + that.config.prefix + that.config.authURI);
+						request.post(that.config.baseUrl + that.config.prefix + that.config.authURI,
+							{
+								followAllRedirects: true,
+								jar: j,
+								headers: {
+									'Host': 'portal.adtpulse.com',
+									'Referrer': that.config.baseUrl + that.config.prefix + that.config.authURI,
+									'User-Agent': ua
+								},
+								form: {
+									username: that.config.username,
+									password: that.config.password,
+									fingerprint: that.config.fingerprint
+								}
+							},
+							function (err, httpResponse) {
+								that.isAuthenticating = false;
+								if (err || httpResponse.request.path !== that.config.prefix + that.config.summaryURI) {
+									that.authenticated = false;
+									console.log("\x1b[31m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse: Authentication Failed');
+									console.log("\x1b[41m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse: httpResponse - ' + JSON.stringify(httpResponse));
+									reject();
+								} else {
+									that.authenticated = true;
+									console.log("\x1b[32m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse: Authentication Success');
+									resolve();
+									that.updateAll.call(that);
+								}
+							}
+						);
+					}
+				);
+			}
+		});
+	};
 
 	this.logout = function () {
 
@@ -165,34 +164,36 @@ module.exports = pulse;
 
 	this.getZoneStatusOrb = function() {
 		console.log((new Date()).toLocaleString() + ' Pulse.getZoneStatus (via Orb): Getting Zone Statuses');
-		var deferred = q.defer();
-		request(
-			{
-				url: this.config.baseUrl+this.config.prefix+this.config.sensorOrbURI,
-				jar: j,
-				headers: {
-					'User-Agent': ua,
-					'Referer': this.config.baseUrl+this.config.prefix+this.summaryURI
+		
+		return new Promise((resolve, reject) => {
+			request(
+				{
+					url: this.config.baseUrl + this.config.prefix + this.config.sensorOrbURI,
+					jar: j,
+					headers: {
+						'User-Agent': ua,
+						'Referer': this.config.baseUrl + this.config.prefix + this.summaryURI
+					},
 				},
-			},
-			function(err, httpResponse, body) {
-				if(err){
-					console.log("\x1b[31m%s\x1b[0m",(new Date().toLocaleString()) + ' Pulse.getZoneStatus (via Orb): Zone JSON Failed');
-				} else {
+				function(err, httpResponse, body) {
+					if (err) {
+						console.log("\x1b[31m%s\x1b[0m", (new Date().toLocaleString()) + ' Pulse.getZoneStatus (via Orb): Zone JSON Failed');
+						reject(err);
+					} else {
 						// Load response from call to Orb and parse html
 						const $ = cheerio.load(body);
 						const sensors = $('#orbSensorsList table tr.p_listRow').toArray();
 						// Map values of table to variables
-						const output = _.map(sensors,(sensor) => {
+						const output = _.map(sensors, (sensor) => {
 							const theSensor = cheerio.load(sensor);
 							const theName = theSensor('a.p_deviceNameText').html();
 							const theZone = theSensor('span.p_grayNormalText').html();
 							const theState = theSensor('span.devStatIcon canvas').attr('icon');
-
+	
 							const theZoneNumber = (theZone) ? theZone.replace(/(Zone&#xA0;)([0-9]{1,2})/, '$2') : 0;
-
+	
 							let theTag;
-
+	
 							if (theName && theState !== 'devStatUnknown') {
 								if (theName.includes('Door') || theName.includes('Window')) {
 									theTag = 'sensor,doorWindow';
@@ -220,8 +221,8 @@ module.exports = pulse;
 							 *        devStatAlarm (detected CO/Smoke)
 							 *        devStatUnknown (device offline)
 							 */
-							var timestamp = Math.floor(Date.now() / 1000) // timestamp in seconds
-
+							var timestamp = Math.floor(Date.now() / 1000); // timestamp in seconds
+	
 							return {
 								id: `sensor-${theZoneNumber}`,
 								name: theName || 'Unknown Sensor',
@@ -229,60 +230,68 @@ module.exports = pulse;
 								timestamp: timestamp,
 								state: theState || 'devStatUnknown',
 							};
-
+	
 						});
-
-							console.log("\x1b[32m%s\x1b[0m",(new Date().toLocaleString()) + ' ADT Pulse: Get Zone Status (via Orb) Success');
-							output.forEach(function(obj){
-								var s = obj;
-								console.log("\x1b[42m%s\x1b[0m", (new Date().toLocaleString()) + ' Sensor: ' + s.id + ' Name: ' + s.name + ' Tags: ' + s.tags + ' State: ' + s.state);
-								zoneUpdateCB(s);
-							})
-						var newsat = body.match(/sat=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/)[1]; 
-						if (newsat) { 
+	
+						console.log("\x1b[32m%s\x1b[0m", (new Date().toLocaleString()) + ' ADT Pulse: Get Zone Status (via Orb) Success');
+						output.forEach(function(obj) {
+							var s = obj;
+							console.log("\x1b[42m%s\x1b[0m", (new Date().toLocaleString()) + ' Sensor: ' + s.id + ' Name: ' + s.name + ' Tags: ' + s.tags + ' State: ' + s.state);
+							zoneUpdateCB(s);
+						});
+						var newsat = body.match(/sat=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/)[1];
+						if (newsat) {
 							sat = newsat;
-							console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: New SAT - ::'+ sat + "::");
+							console.log("\x1b[32m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse.setAlarmState: New SAT - ::' + sat + "::");
 						}
+						resolve(output);
 					}
 				}
 			);
-		return deferred.promise;
-	},
+		});
+	};
 
 	this.getDeviceStatus = function() { // not tested
 		console.log((new Date()).toLocaleString() + ' Pulse.getDeviceStatus: Getting Device Statuses');
-		var deferred = q.defer();
-		request(
-			{
-				url: this.config.baseUrl+this.config.prefix+this.config.otherStatusURI,
-				jar: j,
-				headers: {
-					'User-Agent': ua
+		
+		return new Promise((resolve, reject) => {
+			request(
+				{
+					url: this.config.baseUrl + this.config.prefix + this.config.otherStatusURI,
+					jar: j,
+					headers: {
+						'User-Agent': ua
+					},
 				},
-			},
-			function(err, httpResponse, body) {
-					try{
-					var $ = cheerio.load(body);
-					$('tr tr.p_listRow').each(function(){
-						try {
-							deviceUpdateCB({
-								name: $(this).find('td').eq(2).text(),
-								serialnumber: $(this).find('td').eq(2).find('a').attr('href').split('\'')[1],
-								state: $(this).find('td').eq(3).text().trim().toLowerCase() == 'off' ? 0 : 1
-							})
-						}
-						catch (e) {
-							console.log("\x1b[34m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.getDeviceStatus: No Other Devices Found');
-						}
-					})
+				function(err, httpResponse, body) {
+					if (err) {
+						console.log("\x1b[31m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse.getDeviceStatus: Request Failed');
+						reject(err);
+						return;
+					}
+					
+					try {
+						var $ = cheerio.load(body);
+						$('tr tr.p_listRow').each(function() {
+							try {
+								deviceUpdateCB({
+									name: $(this).find('td').eq(2).text(),
+									serialnumber: $(this).find('td').eq(2).find('a').attr('href').split('\'')[1],
+									state: $(this).find('td').eq(3).text().trim().toLowerCase() == 'off' ? 0 : 1
+								});
+							} catch (e) {
+								console.log("\x1b[34m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse.getDeviceStatus: No Other Devices Found');
+							}
+						});
+						resolve();
+					} catch (e) {
+						console.log("\x1b[31m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse.getDeviceStatus: Failed - ::' + body + "::");
+						reject(e);
+					}
 				}
-				catch(e){
-					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.getDeviceStatus: Failed - ::'+body+"::");
-				}
-			}
-		);
-		return deferred.promise;
-	},
+			);
+		});
+	};
 	this.onDeviceUpdate = function (updateCallback) {
 		deviceUpdateCB = updateCallback;
 	},
@@ -295,158 +304,150 @@ module.exports = pulse;
 
 	// not tested
 	this.deviceStateChange = function (device) {
-		console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.deviceStateChange: Device State Change - ', device.name, device.state);
+		console.log("\x1b[33m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse.deviceStateChange: Device State Change - ', device.name, device.state);
 
-		var deferred = q.defer();
-
-		request.post(this.config.baseUrl+this.config.prefix+this.config.statusChangeURI + '?fi='+device.serialnumber+'&vn=level&u=On|Off&ft=light-onoff',
-
-			{
-				followAllRedirects: true,
-				jar: j,
-				headers: {
-					'Host': 'portal.adtpulse.com',
-					'User-Agent': ua,
-					'Referer': this.config.baseUrl+this.config.prefix+this.config.summaryURI
+		return new Promise((resolve, reject) => {
+			request.post(this.config.baseUrl + this.config.prefix + this.config.statusChangeURI + '?fi=' + device.serialnumber + '&vn=level&u=On|Off&ft=light-onoff',
+				{
+					followAllRedirects: true,
+					jar: j,
+					headers: {
+						'Host': 'portal.adtpulse.com',
+						'User-Agent': ua,
+						'Referer': this.config.baseUrl + this.config.prefix + this.config.summaryURI
+					},
+					form: {
+						sat: sat,
+						value: device.state == 0 ? 'Off' : 'On'
+					}
 				},
-				form:{
-					sat: sat,
-					value: device.state == 0 ? 'Off' : 'On'
+				function (err) {
+					if (err) {
+						console.log("\x1b[31m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse: Device State Failure');
+						reject();
+					} else {
+						console.log("\x1b[32m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse: Device State Success');
+						resolve();
+					}
 				}
-			},
-			function(err){
-				if(err){
-					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Device State Failure');
-					deferred.reject()
-				} else {
-					console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Device State Success');
-					deferred.resolve();
-				}
-			}
-		);
-		return deferred.promise;
-	},
+			);
+		});
+	};
 
 	this.getAlarmStatus = function () {
 		console.log((new Date()).toLocaleString() + ' Pulse.getAlarmStatus: Getting Alarm Statuses');
-		var deferred = q.defer();
 
-		request(
-			{
-				url: this.config.baseUrl+this.config.prefix+this.config.summaryURI,
-				jar: j,
-				headers: {
-					'User-Agent': ua
+		return new Promise((resolve, reject) => {
+			request(
+				{
+					url: this.config.baseUrl + this.config.prefix + this.config.summaryURI,
+					jar: j,
+					headers: {
+						'User-Agent': ua
+					},
 				},
-			},
-			function(err, httpResponse, body) {
-
-				// signed in?
-				if (body==null || body.includes("You have not yet signed in")){
-					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Error Getting SAT Login, Timed Out');
-					deferred.reject();
-					return false;
-				}
-				//parse the html
-				try{
-					var $ = cheerio.load(body);
-					statusUpdateCB({ status: $('#divOrbTextSummary span').text()});
-					deferred.resolve();
-				}
-				catch(e){
-						console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse: Error Getting SAT Cheerio - ::'+ body + '::'+ e);
-						deferred.reject();
+				function (err, httpResponse, body) {
+					// signed in?
+					if (body == null || body.includes("You have not yet signed in")) {
+						console.log("\x1b[31m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse: Error Getting SAT Login, Timed Out');
+						reject();
 						return false;
+					}
+					//parse the html
+					try {
+						var $ = cheerio.load(body);
+						statusUpdateCB({ status: $('#divOrbTextSummary span').text() });
+						resolve();
+					} catch (e) {
+						console.log("\x1b[31m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse: Error Getting SAT Cheerio - ::' + body + '::' + e);
+						reject();
+						return false;
+					}
 				}
-			}
-		);
-		return deferred.promise;
-	},
+			);
+		});
+	};
 
 	this.setAlarmState = function (action) {
 		// action can be: stay, away, disarm
 		// action.newstate
 		// action.prev_state
 
-		console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Setting Alarm Status');
+		console.log("\x1b[32m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse.setAlarmState: Setting Alarm Status');
 
-		var deferred = q.defer();
-		var that = this;
-		var url,ref;
+		return new Promise((resolve, reject) => {
+			var that = this;
+			var url, ref;
 
-		ref = this.config.baseUrl+this.config.prefix+this.config.summaryURI;
+			ref = this.config.baseUrl + this.config.prefix + this.config.summaryURI;
 
-		if (action.newstate!='disarm'){
-			// we are arming.
-			if(action.isForced==true){
-				if (sat) {
-					url= this.config.baseUrl+this.config.prefix+this.config.armURI+'?sat=' + sat + '&href=rest/adt/ui/client/security/setForceArm&armstate=forcearm&arm=' + encodeURIComponent(action.newstate);
-				} else {
-					url= this.config.baseUrl+this.config.prefix+this.config.armURI+'?href=rest/adt/ui/client/security/setForceArm&armstate=forcearm&arm=' + encodeURIComponent(action.newstate);
-				}
-				ref= this.config.baseUrl+this.config.prefix+this.config.disarmURI+'&armstate='+ action.prev_state +"&arm="+action.newstate;
-			}
-				else{
+			if (action.newstate != 'disarm') {
+				// we are arming.
+				if (action.isForced == true) {
 					if (sat) {
-						url= this.config.baseUrl+this.config.prefix+this.config.disarmURI+'&armstate='+ action.prev_state +"&arm="+action.newstate + "&sat=" + sat;
-						} else {
-							url= this.config.baseUrl+this.config.prefix+this.config.disarmURI+'&armstate='+ action.prev_state +"&arm="+action.newstate
-						}
-				}
-		}
-		else{ // disarm
-			if (sat) {
-				url= this.config.baseUrl+this.config.prefix+this.config.disarmURI+'&armstate='+ action.prev_state + "&arm=off" + "&sat=" + sat;
-				} else {
-					url= this.config.baseUrl+this.config.prefix+this.config.disarmURI+'&armstate='+ action.prev_state + "&arm=off";
-				}
-		}
-
-		console.log((new Date()).toLocaleString() + ' Pulse.setAlarmState: Calling the URL - ' + url);
-
-		request(
-			{
-				url: url,
-				jar: j,
-				headers: {
-					'User-Agent': ua,
-					'Referer': ref
-				},
-			},
-			function(err, httpResponse, body) {
-				if(err){
-					console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Failed With - '+ body );
-					deferred.reject();
-				} else {
-					// when arming check if Some sensors are open or reporting motion
-					// need the new sat value;
-				if (action.newstate!="disarm" && action.isForced!=true && body.includes("Some sensors are open or reporting motion")){
-						console.log("\x1b[33m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Some sensors are open. Will force the alarm state.');
-						newsat = body.match(/sat=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/)[1]; 
-						if (newsat) { 
-							sat = newsat;
-							console.log((new Date()).toLocaleString() + ' Pulse.setAlarmState: New SAT - ::'+ sat + "::");
-						}
-						action.isForced=true;
-						that.setAlarmState(action);
-						deferred.resolve(body);
+						url = this.config.baseUrl + this.config.prefix + this.config.armURI + '?sat=' + sat + '&href=rest/adt/ui/client/security/setForceArm&armstate=forcearm&arm=' + encodeURIComponent(action.newstate);
+					} else {
+						url = this.config.baseUrl + this.config.prefix + this.config.armURI + '?href=rest/adt/ui/client/security/setForceArm&armstate=forcearm&arm=' + encodeURIComponent(action.newstate);
 					}
-					else{
+					ref = this.config.baseUrl + this.config.prefix + this.config.disarmURI + '&armstate=' + action.prev_state + "&arm=" + action.newstate;
+				} else {
+					if (sat) {
+						url = this.config.baseUrl + this.config.prefix + this.config.disarmURI + '&armstate=' + action.prev_state + "&arm=" + action.newstate + "&sat=" + sat;
+					} else {
+						url = this.config.baseUrl + this.config.prefix + this.config.disarmURI + '&armstate=' + action.prev_state + "&arm=" + action.newstate;
+					}
+				}
+			} else { // disarm
+				if (sat) {
+					url = this.config.baseUrl + this.config.prefix + this.config.disarmURI + '&armstate=' + action.prev_state + "&arm=off" + "&sat=" + sat;
+				} else {
+					url = this.config.baseUrl + this.config.prefix + this.config.disarmURI + '&armstate=' + action.prev_state + "&arm=off";
+				}
+			}
+
+			console.log((new Date()).toLocaleString() + ' Pulse.setAlarmState: Calling the URL - ' + url);
+
+			request(
+				{
+					url: url,
+					jar: j,
+					headers: {
+						'User-Agent': ua,
+						'Referer': ref
+					},
+				},
+				function (err, httpResponse, body) {
+					if (err) {
+						console.log("\x1b[31m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse.setAlarmState: Failed With - ' + body);
+						reject();
+					} else {
+						// when arming check if Some sensors are open or reporting motion
+						// need the new sat value;
+						if (action.newstate != "disarm" && action.isForced != true && body.includes("Some sensors are open or reporting motion")) {
+							console.log("\x1b[33m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse.setAlarmState: Some sensors are open. Will force the alarm state.');
+							newsat = body.match(/sat=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/)[1];
+							if (newsat) {
+								sat = newsat;
+								console.log((new Date()).toLocaleString() + ' Pulse.setAlarmState: New SAT - ::' + sat + "::");
+							}
+							action.isForced = true;
+							that.setAlarmState(action);
+							resolve(body);
+						} else {
 							// we failed?
 							// Arming Disarming states are captured. No need to call them failed.
-							if(!action.isForced && !body.includes("Disarming") && !body.includes("Arming")){
-									console.log("\x1b[31m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Forced Alarm State Failed - ::'+ body + "::");
-									deferred.reject();
+							if (!action.isForced && !body.includes("Disarming") && !body.includes("Arming")) {
+								console.log("\x1b[31m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse.setAlarmState: Forced Alarm State Failed - ::' + body + "::");
+								reject();
 							}
+						}
+						console.log("\x1b[32m%s\x1b[0m", (new Date()).toLocaleString() + ' Pulse.setAlarmState: Success. Forced? - ' + action.isForced);
+						resolve(body);
 					}
-					console.log("\x1b[32m%s\x1b[0m",(new Date()).toLocaleString() + ' Pulse.setAlarmState: Success. Forced? - '+ action.isForced);
-					deferred.resolve(body);
 				}
-
-			}
-		);
-		return deferred.promise;
-	}
+			);
+		});
+	};
 
 	this.pulse = function(uid) {
 		console.log((new Date()).toLocaleString() + ' Pulse.pulse: Spanning');
