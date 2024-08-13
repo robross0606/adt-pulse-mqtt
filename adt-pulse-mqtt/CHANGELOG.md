@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.3.0
+
+- NOTE - Only NodeJS 18 and above are supported starting with this version
+- Change tests to use assert instead of chai by @BigThunderSR in #150
+- Dependency updates
+
 ## 3.2.7
 
 - Dependency updates
