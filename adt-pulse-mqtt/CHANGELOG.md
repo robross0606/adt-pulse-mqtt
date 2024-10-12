@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.1
+
+- Dependency updates
+
 ## 3.3.0
 
 - NOTE - Only NodeJS 18 and above are supported starting with this version
