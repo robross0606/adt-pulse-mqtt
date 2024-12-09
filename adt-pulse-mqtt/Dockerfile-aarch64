@@ -11,10 +11,10 @@ RUN [ "cross-build-start" ]
 #RUN apk add --update nodejs=~14
 #RUN apk add --update nodejs-npm=~14
 
-# Install node and npm (Node 18 LTS)
+# Install node and npm
 RUN apk add --no-cache \
-    nodejs \
-    npm
+  nodejs \
+  npm
 
 WORKDIR /usr/src/app
 
@@ -43,11 +43,11 @@ ARG BUILD_NAME="ADT Pulse bridge for Home Assistant using MQTT - aarch64"
 ARG BUILD_REPOSITORY="BigThunderSR/adt-pulse-mqtt"
 
 LABEL \
-    maintainer="BigThunderSR (https://github.com/BigThunderSR)" \
-    org.opencontainers.image.title="${BUILD_NAME}" \
-    org.opencontainers.image.description="${BUILD_DESCRIPTION}" \
-    org.opencontainers.image.vendor="ADT Pulse bridge for Home Assistant using MQTT" \
-    org.opencontainers.image.authors="BigThunderSR (https://github.com/BigThunderSR)" \    
-    org.opencontainers.image.url="https://github.com/BigThunderSR" \
-    org.opencontainers.image.source="https://github.com/${BUILD_REPOSITORY}" \
-    org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" 
+  maintainer="BigThunderSR (https://github.com/BigThunderSR)" \
+  org.opencontainers.image.title="${BUILD_NAME}" \
+  org.opencontainers.image.description="${BUILD_DESCRIPTION}" \
+  org.opencontainers.image.vendor="ADT Pulse bridge for Home Assistant using MQTT" \
+  org.opencontainers.image.authors="BigThunderSR (https://github.com/BigThunderSR)" \    
+  org.opencontainers.image.url="https://github.com/BigThunderSR" \
+  org.opencontainers.image.source="https://github.com/${BUILD_REPOSITORY}" \
+  org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" 
