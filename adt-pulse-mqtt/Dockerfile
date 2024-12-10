@@ -5,11 +5,11 @@ FROM $BUILD_FROM
 ENV LANG C.UTF-8
 ENV NODE_ENV production
 
-# Install node and npm (Node 14 LTS)
+# Install node and npm (Node 14 LTS) ##From Original Dockerfile at time of initial fork
 #RUN apk add --update nodejs=~14
 #RUN apk add --update nodejs-npm=~14
 
-# Install node and npm (Node 18 LTS)
+# Install node and npm (Node Version Depends on Balenalib Base Image Version Number - i.e. xx in 3.xx)
 RUN apk add --no-cache \
     nodejs \
     npm
@@ -46,4 +46,4 @@ LABEL \
     org.opencontainers.image.authors="BigThunderSR (https://github.com/BigThunderSR)" \    
     org.opencontainers.image.url="https://github.com/BigThunderSR" \
     org.opencontainers.image.source="https://github.com/${BUILD_REPOSITORY}" \
-    org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" 
+    org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md"

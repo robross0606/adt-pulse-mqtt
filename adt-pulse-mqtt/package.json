@@ -4,8 +4,12 @@
   "description": "Home Assistant ADT Pulse Bridge using MQTT",
   "author": "ADT Pulse MQTT Team",
   "main": "server.js",
+  "engines": {
+    "node": ">= 18"
+  },
   "scripts": {
     "start": "node server.js",
+    "debug": "node --nolazy --inspect=9229 --trace-warnings server.js",
     "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha"
   },
   "repository": {

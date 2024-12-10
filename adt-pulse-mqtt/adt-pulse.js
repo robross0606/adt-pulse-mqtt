@@ -186,11 +186,15 @@ module.exports = pulse;
 						// Map values of table to variables
 						const output = _.map(sensors, (sensor) => {
 							const theSensor = cheerio.load(sensor);
-							const theName = theSensor('a.p_deviceNameText').html();
-							const theZone = theSensor('span.p_grayNormalText').html();
-							const theState = theSensor('span.devStatIcon canvas').attr('icon');
-	
-							const theZoneNumber = (theZone) ? theZone.replace(/(Zone&#xA0;)([0-9]{1,2})/, '$2') : 0;
+              const extractedData = theSensor.extract({
+                theName: 'a.p_deviceNameText',
+                theZone: 'div.p_grayNormalText',
+                theState: {selector: 'span.devStatIcon canvas', value: 'icon'}
+              })
+							const theName = extractedData.theName;
+							const theState = extractedData.theState;
+							const theZone = extractedData.theZone;
+							const theZoneNumber = (theZone) ? theZone.replace(/(Zone\s)(\d+)/, '$2') : '0';
 	
 							let theTag;
 	
