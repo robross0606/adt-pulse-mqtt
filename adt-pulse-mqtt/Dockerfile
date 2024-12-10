@@ -46,4 +46,5 @@ LABEL \
     org.opencontainers.image.authors="BigThunderSR (https://github.com/BigThunderSR)" \    
     org.opencontainers.image.url="https://github.com/BigThunderSR" \
     org.opencontainers.image.source="https://github.com/${BUILD_REPOSITORY}" \
-    org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" 
+    org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md"
+    
