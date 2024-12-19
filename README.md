@@ -9,26 +9,29 @@
 [![Builder](https://github.com/BigThunderSR/adt-pulse-mqtt/actions/workflows/builder.yaml/badge.svg)](https://github.com/BigThunderSR/adt-pulse-mqtt/actions/workflows/builder.yaml)
 
 # adt-pulse-mqtt
-ADT Pulse bridge for Home Assistant using MQTT. 
+
+ADT Pulse bridge for Home Assistant using MQTT.
 
 Integrates ADT Pulse with Home Assistant. ~~You can also choose to add the ADT Pulse alarm system and ADT devices to your SmartThings. SmartApp allows automatic running our Routines upon alarm changing states.~~
 
 ## Home Assistant Setup
 
 [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https://github.com/BigThunderSR/adt-pulse-mqtt)
- 
+
 - First, add the repository (https://github.com/BigThunderSR/adt-pulse-mqtt) using the Add-on Store in the Home Assistant Supervisor. This is the easiest way to run this add-on, but it can also run as an independent container using Docker. In both cases, communication is through MQTT.
-- Install ADT Pulse MQTT from the store. Don't forget to configure `pulse_login` with your ADT Pulse Portal username and password. A separate login for Home Assistant is recommended. 
+- Install ADT Pulse MQTT from the store. Don't forget to configure `pulse_login` with your ADT Pulse Portal username and password. A separate login for Home Assistant is recommended.
 - Configure Add-on Options
 
 ### ADT Pulse Options
+
 The pulse_login options are:
 
 - username: The ADT Pulse Portal Username
-- password:  The ADT Pulse Portal Password
+- password: The ADT Pulse Portal Password
 - fingerprint: The fingerprint of trusted device authenticated with 2-factor authentication (see below)
 
 ### 2-Factor Authentication
+
 ADT Pulse now requires 2-factor authentication and you will need to provide a device fingerprint:
 
 1. Open a Chrome browser tab (under Incognito mode)
@@ -47,20 +50,23 @@ ADT Pulse now requires 2-factor authentication and you will need to provide a de
 14. Close the Chrome window (DO NOT sign out)
 
 ### MQTT Options
+
 You'll need an MQTT broker. The Mosquitto add-on broker (https://www.home-assistant.io/addons/mosquitto/) is the easiest to implement.
 
 In most cases, only the mqtt_options are needed:
-  - mqtt_host: core-mosquitto (if using Mosquitto add-on, otherwise hostname or IP address)
-  - mqtt_connection_options: 
-    - username: MQTT broker username
-    - password: MQTT broker password
+
+- mqtt_host: core-mosquitto (if using Mosquitto add-on, otherwise hostname or IP address)
+- mqtt_connection_options:
+  - username: MQTT broker username
+  - password: MQTT broker password
 
 In most cases, these options are sufficient. Alternatively, the mqtt_url can be specified instead which allows more advanced configurations (see https://www.npmjs.com/package/mqtt#connect).
 
 ### Home Assistant Configuration
+
 This add-on uses the Home Assistant integrations for MQTT Alarm Control Panel and MQTT Binary Sensor.
 
- To configure these, you must edit your configuration.yaml:
+To configure these, you must edit your configuration.yaml:
 
 To add the control panel:
 
@@ -98,6 +104,7 @@ mqtt:
 </pre>
 
 This will provide basic support for door sensors. You can add additional binary sensors for other possible state values. As an example, you can add support for a low battery condition on a sensor.
+
 <pre>
 mqtt:
   binary_sensor:
@@ -112,17 +119,18 @@ Note: State topic names come from your Pulse configuration.
 
 The possible state values are:
 
-  * devStatOK (device okay)
-  * devStatOpen (door/window opened)
-  * devStatMotion (detected motion)
-  * devstatLowBatt: (low battery condition)
-  * devStatTamper (glass broken or device tamper)
-  * devStatAlarm (detected CO/Smoke)
-  * devStatUnknown (device offline)
+- devStatOK (device okay)
+- devStatOpen (door/window opened)
+- devStatMotion (detected motion)
+- devstatLowBatt: (low battery condition)
+- devStatTamper (glass broken or device tamper)
+- devStatAlarm (detected CO/Smoke)
+- devStatUnknown (device offline)
 
 If a device type is not listed, open an issue containing your MQTT dump which lists your zones.
 
 ## Docker Compose
+
 If you want to run this add-on independently using Docker, here is a sample Docker Compose file:
 
 ```
@@ -136,7 +144,9 @@ services:
       volumes:
        - /local/path/to/config-directory:/data~~
 ```
+
 Sample config.json placed in the config-directory:
+
 ```
 {
     "pulse_login" : {
@@ -158,23 +168,22 @@ Sample config.json placed in the config-directory:
 
 ## ~~Smartthings Support~~ - No Longer Valid Since Smartthings Deprecated Groovy IDE
 
-* ~~In Hassio, setting of the ADT Pulse MQTT set~~
-<strike>
-<pre>
-"smartthings": true
-</pre>
-</strike>
+- ~~In Hassio, setting of the ADT Pulse MQTT set~~
+  <strike>
+  <pre>
+  "smartthings": true
+  </pre>
+  </strike>
 
-* ~~In SmartThings IDE,~~
+- ~~In SmartThings IDE,~~
 
 1. ~~add the following devicehandlers:
-https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/devicetypes/haruny/VirtualADTAlarmSystem.src~~
-1. ~~add the following SmartApp: 
-https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/smartapps/haruny/ADTAlarmSmartApp.src~~
+   https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/devicetypes/haruny/VirtualADTAlarmSystem.src~~
+1. ~~add the following SmartApp:
+   https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/smartapps/haruny/ADTAlarmSmartApp.src~~
 1. ~~Add your devices using SmartThings IDE. You have to name them the same way they appear in ADT Portal.~~
 1. ~~Run the SmartApp in your mobile application. Follow the instructions. Do not rename ADT Alarm System device created by the app. Multiple alarm systems/locations is not supported.~~
 1. ~~In MQTT Bridge app, select all the devices created (Alarm system, contacts, motion etc.)~~
-
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
