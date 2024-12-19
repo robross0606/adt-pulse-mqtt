@@ -1,4 +1,4 @@
-name: Lint
+name: HA Add-on Linter
 
 on:
   workflow_dispatch:
