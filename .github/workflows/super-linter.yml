@@ -25,7 +25,7 @@ jobs:
       - name: Install Dependencies
         run: npm install --include=dev  
       - name: Lint Code Base
-        uses: github/super-linter@v4
+        uses: github/super-linter@v7
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: "master"
