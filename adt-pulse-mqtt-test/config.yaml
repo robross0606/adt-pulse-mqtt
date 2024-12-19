@@ -15,7 +15,7 @@ arch:
 map:
   - share:rw
   - ssl
-image: 'ghcr.io/bigthundersr/adt-pulse-mqtt-test-{arch}'
+image: "ghcr.io/bigthundersr/adt-pulse-mqtt-test-{arch}"
 options:
   ssl: false
   certfile: fullchain.pem

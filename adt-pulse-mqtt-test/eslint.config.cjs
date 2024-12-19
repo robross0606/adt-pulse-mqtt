@@ -3,45 +3,52 @@ const globals = require("globals");
 const babelParser = require("@babel/eslint-parser");
 const js = require("@eslint/js");
 
-const {
-    FlatCompat,
-} = require("@eslint/eslintrc");
+const { FlatCompat } = require("@eslint/eslintrc");
 
 const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
 });
 
-module.exports = [{
+module.exports = [
+  {
     //ignores: ["**/index.cjs"],
-}, ...compat.extends("eslint:recommended"), {
+  },
+  ...compat.extends("eslint:recommended"),
+  {
     plugins: {
-        "@babel": babel,
+      "@babel": babel,
     },
 
     languageOptions: {
-        globals: {
-            ...globals.node,
-            ...globals.browser,
-            ...Object.fromEntries(Object.entries(globals.browser).map(([key]) => [key, "off"])),
-            ...globals.commonjs,
-            ...globals.mocha,
-        },
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+        ...Object.fromEntries(
+          Object.entries(globals.browser).map(([key]) => [key, "off"]),
+        ),
+        ...globals.commonjs,
+        ...globals.mocha,
+      },
 
-        parser: babelParser,
-        ecmaVersion: 2018,
-        sourceType: "module",
+      parser: babelParser,
+      ecmaVersion: 2018,
+      sourceType: "module",
 
-        parserOptions: {
-            babelOptions: {
-                configFile: "./.babelrc",
-            },
+      parserOptions: {
+        babelOptions: {
+          configFile: "./.babelrc",
         },
+      },
     },
 
     rules: {
-        "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
-        "no-undef": "error"
+      "no-unused-vars": [
+        "error",
+        { vars: "all", args: "after-used", ignoreRestSiblings: false },
+      ],
+      "no-undef": "error",
     },
-}];
+  },
+];
