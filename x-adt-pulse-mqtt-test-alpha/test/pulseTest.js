@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
-const assert = require('assert');
-const rewire = require('rewire');
-const nock = require('nock');
-const fs = require('fs');
+const assert = require("assert");
+const rewire = require("rewire");
+const nock = require("nock");
+const fs = require("fs");
 
 describe("ADT Pulse Default Initialization Tests", function () {
   // Setup
   // Rewire adt-pulse module
-  let pulse = rewire('../adt-pulse.js');
+  let pulse = rewire("../adt-pulse.js");
   let testAlarm = new pulse();
   // Prevent executing sync
   clearInterval(testAlarm.pulseInterval);
@@ -40,7 +40,7 @@ describe("ADT Pulse Default Initialization Tests", function () {
 
   it("Should have a Config property set", () => {
     //assert.ok(testAlarm.hasOwnProperty("config"));
-    assert.ok('config' in testAlarm);
+    assert.ok("config" in testAlarm);
   });
 
   it("Should have no value for username", () => {
@@ -81,7 +81,10 @@ describe("ADT Pulse Default Initialization Tests", function () {
   });
 
   it("Should have authURI set to /access/signin.jsp?e=n&e=n&&partner=adt", () => {
-    assert.strictEqual(testAlarm.config.authURI, "/access/signin.jsp?e=n&e=n&&partner=adt");
+    assert.strictEqual(
+      testAlarm.config.authURI,
+      "/access/signin.jsp?e=n&e=n&&partner=adt",
+    );
   });
 
   it("Should have summaryURI property set", () => {
@@ -105,14 +108,17 @@ describe("ADT Pulse Default Initialization Tests", function () {
   });
 
   it("Should have disarmURI set to /quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState", () => {
-    assert.strictEqual(testAlarm.config.disarmURI, "/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState");
+    assert.strictEqual(
+      testAlarm.config.disarmURI,
+      "/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState",
+    );
   });
 });
 
 describe("ADT Pulse Test Value Initialization Test", function () {
   // Setup
   // Rewire adt-pulse module
-  let pulse = rewire('../adt-pulse.js');
+  let pulse = rewire("../adt-pulse.js");
   let testAlarm = new pulse("test", "password", "123456789");
   // Prevent executing sync
   clearInterval(testAlarm.pulseInterval);
@@ -144,7 +150,7 @@ describe("ADT Pulse Test Value Initialization Test", function () {
 
   it("Should have a Config property set", () => {
     //assert.ok(testAlarm.hasOwnProperty("config"));
-    assert.ok('config' in testAlarm);
+    assert.ok("config" in testAlarm);
   });
 
   it("Should have a username of test", () => {
@@ -185,7 +191,10 @@ describe("ADT Pulse Test Value Initialization Test", function () {
   });
 
   it("Should have authURI set to /access/signin.jsp?e=n&e=n&&partner=adt", () => {
-    assert.strictEqual(testAlarm.config.authURI, "/access/signin.jsp?e=n&e=n&&partner=adt");
+    assert.strictEqual(
+      testAlarm.config.authURI,
+      "/access/signin.jsp?e=n&e=n&&partner=adt",
+    );
   });
 
   it("Should have summaryURI property set", () => {
@@ -209,38 +218,47 @@ describe("ADT Pulse Test Value Initialization Test", function () {
   });
 
   it("Should have disarmURI set to /quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState", () => {
-    assert.strictEqual(testAlarm.config.disarmURI, "/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState");
+    assert.strictEqual(
+      testAlarm.config.disarmURI,
+      "/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState",
+    );
   });
 });
 
-describe('ADT Pulse Login Test', function () {
+describe("ADT Pulse Login Test", function () {
   // Setup
   // Rewire adt-pulse module
-  let pulse = rewire('../adt-pulse.js');
+  let pulse = rewire("../adt-pulse.js");
   let testAlarm = new pulse("test", "password", "123456789");
   // Prevent executing sync
   clearInterval(testAlarm.pulseInterval);
 
   nock("https://portal.adtpulse.com")
-    .get('/')
-    .reply(302, "<html></html>", { "Location": "https://portal.adtpulse.com/myhome/22.0.0-233/access/signin.jsp" })
-    .get('/myhome/22.0.0-233/access/signin.jsp')
+    .get("/")
+    .reply(302, "<html></html>", {
+      Location:
+        "https://portal.adtpulse.com/myhome/22.0.0-233/access/signin.jsp",
+    })
+    .get("/myhome/22.0.0-233/access/signin.jsp")
     .reply(200, () => {
       try {
-        var page = fs.readFileSync('./test/pages/signin.jsp', 'utf8');
+        var page = fs.readFileSync("./test/pages/signin.jsp", "utf8");
         return page.toString();
       } catch (e) {
-        console.log('Error:', e.stack);
+        console.log("Error:", e.stack);
       }
     })
-    .post('/myhome/22.0.0-233/access/signin.jsp', {
-      username: 'test',
-      password: 'password',
-      fingerprint: '123456789'
+    .post("/myhome/22.0.0-233/access/signin.jsp", {
+      username: "test",
+      password: "password",
+      fingerprint: "123456789",
     })
     .query(true)
-    .reply(301, "<html></html>", { "Location": "https://portal.adtpulse.com/myhome/22.0.0-233/summary/summary.jsp" })
-    .get('/myhome/22.0.0-233/summary/summary.jsp')
+    .reply(301, "<html></html>", {
+      Location:
+        "https://portal.adtpulse.com/myhome/22.0.0-233/summary/summary.jsp",
+    })
+    .get("/myhome/22.0.0-233/summary/summary.jsp")
     .reply(200, "<html></html>");
 
   it("Should set prefix", function () {
@@ -258,15 +276,14 @@ describe('ADT Pulse Login Test', function () {
 });
 
 // Test update functions called by updateAll()
-describe('ADT Pulse Update tests', function () {
-
+describe("ADT Pulse Update tests", function () {
   var alarm;
-  var devices = 'None';
+  var devices = "None";
   var zones = [];
 
   // Setup
   // Rewire adt-pulse module
-  let pulse = rewire('../adt-pulse.js');
+  let pulse = rewire("../adt-pulse.js");
   pulse.__set__("authenticated", "true");
   let testAlarm = new pulse("test", "password", "123456789");
   // Prevent executing sync
@@ -285,31 +302,34 @@ describe('ADT Pulse Update tests', function () {
   });
 
   nock("https://portal.adtpulse.com")
-    .get('/myhome/13.0.0-153/summary/summary.jsp')
+    .get("/myhome/13.0.0-153/summary/summary.jsp")
     .reply(200, () => {
       try {
-        var page = fs.readFileSync('./test/pages/summaryalarmstatus.jsp', 'utf8');
+        var page = fs.readFileSync(
+          "./test/pages/summaryalarmstatus.jsp",
+          "utf8",
+        );
         return page.toString();
       } catch (e) {
-        console.log('Error:', e.stack);
+        console.log("Error:", e.stack);
       }
     })
-    .get('/myhome/13.0.0-153/ajax/currentStates.jsp')
+    .get("/myhome/13.0.0-153/ajax/currentStates.jsp")
     .reply(200, () => {
       try {
-        var page = fs.readFileSync('./test/pages/otherdevices.jsp', 'utf8');
+        var page = fs.readFileSync("./test/pages/otherdevices.jsp", "utf8");
         return page.toString();
       } catch (e) {
-        console.log('Error:', e.stack);
+        console.log("Error:", e.stack);
       }
     })
-    .get('/myhome/13.0.0-153/ajax/orb.jsp')
+    .get("/myhome/13.0.0-153/ajax/orb.jsp")
     .reply(200, () => {
       try {
-        var page = fs.readFileSync('./test/pages/zonestatus.jsp', 'utf8');
+        var page = fs.readFileSync("./test/pages/zonestatus.jsp", "utf8");
         return page.toString();
       } catch (e) {
-        console.log('Error:', e.stack);
+        console.log("Error:", e.stack);
       }
     });
 
@@ -335,24 +355,28 @@ describe('ADT Pulse Update tests', function () {
   });
 });
 
-describe('ADT Pulse Disarm Test', function () {
+describe("ADT Pulse Disarm Test", function () {
   let setAlarm;
 
-  let pulse = rewire('../adt-pulse.js');
+  let pulse = rewire("../adt-pulse.js");
   pulse.__set__("authenticated", "true");
   pulse.__set__("sat", "11111111-2222-3333-4444-555555555555");
   let testAlarm = new pulse("test", "password");
   // Prevent executing sync
   clearInterval(testAlarm.pulseInterval);
 
-  nock('https://portal.adtpulse.com')
-    .get('/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=stay&arm=off')
-    .reply(200, 'Disarmed')
-    .get('/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=stay&arm=off&sat=11111111-2222-3333-4444-555555555555')
-    .reply(200, 'Disarmed');
+  nock("https://portal.adtpulse.com")
+    .get(
+      "/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=stay&arm=off",
+    )
+    .reply(200, "Disarmed")
+    .get(
+      "/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=stay&arm=off&sat=11111111-2222-3333-4444-555555555555",
+    )
+    .reply(200, "Disarmed");
 
   // Test disarming
-  setAlarm = { 'newstate': 'disarm', 'prev_state': 'stay', "isForced": "false" };
+  setAlarm = { newstate: "disarm", prev_state: "stay", isForced: "false" };
   it("Should disarmed alarm", function () {
     return testAlarm.setAlarmState(setAlarm).then(() => {
       assert.ok(true);
@@ -360,24 +384,28 @@ describe('ADT Pulse Disarm Test', function () {
   });
 });
 
-describe('ADT Pulse Arm Stay Test', function () {
+describe("ADT Pulse Arm Stay Test", function () {
   let setAlarm;
 
-  let pulse = rewire('../adt-pulse.js');
+  let pulse = rewire("../adt-pulse.js");
   pulse.__set__("authenticated", "true");
   pulse.__set__("sat", "11111111-2222-3333-4444-555555555555");
   let testAlarm = new pulse("test", "password");
   // Prevent executing sync
   clearInterval(testAlarm.pulseInterval);
 
-  nock('https://portal.adtpulse.com')
-    .get('/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=stay')
-    .reply(200, 'Armed stay')
-    .get('/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=stay&sat=11111111-2222-3333-4444-555555555555')
-    .reply(200, 'Armed stay');
+  nock("https://portal.adtpulse.com")
+    .get(
+      "/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=stay",
+    )
+    .reply(200, "Armed stay")
+    .get(
+      "/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=stay&sat=11111111-2222-3333-4444-555555555555",
+    )
+    .reply(200, "Armed stay");
 
   // Test arm stay
-  setAlarm = { 'newstate': 'stay', 'prev_state': 'disarmed', "isForced": "false" };
+  setAlarm = { newstate: "stay", prev_state: "disarmed", isForced: "false" };
   it("Should arm the alarm to stay", function () {
     return testAlarm.setAlarmState(setAlarm).then(() => {
       assert.ok(true);
@@ -385,24 +413,28 @@ describe('ADT Pulse Arm Stay Test', function () {
   });
 });
 
-describe('ADT Pulse Arm Away Test without forcing ', function () {
+describe("ADT Pulse Arm Away Test without forcing ", function () {
   let setAlarm;
 
-  let pulse = rewire('../adt-pulse.js');
+  let pulse = rewire("../adt-pulse.js");
   pulse.__set__("authenticated", "true");
   pulse.__set__("sat", "11111111-2222-3333-4444-555555555555");
   let testAlarm = new pulse("test", "password");
   // Prevent executing sync
   clearInterval(testAlarm.pulseInterval);
 
-  nock('https://portal.adtpulse.com')
-    .get('/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=away')
-    .reply(200, 'Armed stay')
-    .get('/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=away&sat=11111111-2222-3333-4444-555555555555')
-    .reply(200, 'Armed stay');
+  nock("https://portal.adtpulse.com")
+    .get(
+      "/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=away",
+    )
+    .reply(200, "Armed stay")
+    .get(
+      "/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=away&sat=11111111-2222-3333-4444-555555555555",
+    )
+    .reply(200, "Armed stay");
 
   // Test arm away
-  setAlarm = { 'newstate': 'away', 'prev_state': 'disarmed', "isForced": "false" };
+  setAlarm = { newstate: "away", prev_state: "disarmed", isForced: "false" };
   it("Should arm the alarm to stay", function () {
     return testAlarm.setAlarmState(setAlarm).then(() => {
       assert.ok(true);
@@ -410,26 +442,38 @@ describe('ADT Pulse Arm Away Test without forcing ', function () {
   });
 });
 
-describe('ADT Pulse Forced Arm Away Test', function () {
+describe("ADT Pulse Forced Arm Away Test", function () {
   let setAlarm;
 
-  let pulse = rewire('../adt-pulse.js');
+  let pulse = rewire("../adt-pulse.js");
   pulse.__set__("authenticated", "true");
   pulse.__set__("sat", "11111111-2222-3333-4444-555555555555");
   let testAlarm = new pulse("test", "password");
   // Prevent executing sync
   clearInterval(testAlarm.pulseInterval);
 
-  nock('https://portal.adtpulse.com')
-    .get('/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=away')
-    .reply(200, 'Armed stay. Some sensors are open or reporting motion. sat=11111111-2222-3333-4444-555555555555&href=')
-    .get('/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=away&sat=11111111-2222-3333-4444-555555555555')
-    .reply(200, 'Armed stay. Some sensors are open or reporting motion. sat=11111111-2222-3333-4444-555555555555&href=')
-    .get('/myhome/13.0.0-153/quickcontrol/serv/RunRRACommand?sat=1234&href=rest/adt/ui/client/security/setForceArm&armstate=forcearm&arm=away&sat=11111111-2222-3333-4444-555555555555')
+  nock("https://portal.adtpulse.com")
+    .get(
+      "/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=away",
+    )
+    .reply(
+      200,
+      "Armed stay. Some sensors are open or reporting motion. sat=11111111-2222-3333-4444-555555555555&href=",
+    )
+    .get(
+      "/myhome/13.0.0-153/quickcontrol/armDisarm.jsp?href=rest/adt/ui/client/security/setArmState&armstate=disarmed&arm=away&sat=11111111-2222-3333-4444-555555555555",
+    )
+    .reply(
+      200,
+      "Armed stay. Some sensors are open or reporting motion. sat=11111111-2222-3333-4444-555555555555&href=",
+    )
+    .get(
+      "/myhome/13.0.0-153/quickcontrol/serv/RunRRACommand?sat=1234&href=rest/adt/ui/client/security/setForceArm&armstate=forcearm&arm=away&sat=11111111-2222-3333-4444-555555555555",
+    )
     .reply(200, "Armed away - forced");
 
   // Test arm away
-  setAlarm = { 'newstate': 'away', 'prev_state': 'disarmed', "isForced": "false" };
+  setAlarm = { newstate: "away", prev_state: "disarmed", isForced: "false" };
   it("Should arm the alarm to stay", function () {
     return testAlarm.setAlarmState(setAlarm).then(() => {
       assert.ok(true);
