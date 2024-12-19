@@ -22,11 +22,12 @@ jobs:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
-      - name: Install Dependencies
-        run: npm install --include=dev  
+      #- name: Install Dependencies
+      #  run: npm install --include=dev  
       - name: Lint Code Base
         uses: github/super-linter@v7
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: "master"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: /
