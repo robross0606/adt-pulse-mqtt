@@ -12,7 +12,7 @@
 
 ADT Pulse bridge for Home Assistant using MQTT.
 
-Integrates ADT Pulse with Home Assistant. ~~You can also choose to add the ADT Pulse alarm system and ADT devices to your SmartThings. SmartApp allows automatic running our Routines upon alarm changing states.~~
+Integrates ADT Pulse with Home Assistant. You can also choose to expose ADT devices associated with your ADT Pulse alarm system to SmartThings using [MQTT Discovery](https://github.com/toddaustin07/MQTT-Discovery).
 
 ## Home Assistant Setup
 
@@ -166,24 +166,15 @@ Sample config.json placed in the config-directory:
 }
 ```
 
-## ~~Smartthings Support~~ - No Longer Valid Since Smartthings Deprecated Groovy IDE
+## Smartthings Support using the MQTT Discovery Edge Driver (EXPERIMENTAL)
 
-- ~~In Hassio, setting of the ADT Pulse MQTT set~~
-  <strike>
-  <pre>
-  "smartthings": true
-  </pre>
-  </strike>
+ADT Pulse contact (door, window, etc.) and motion detection devices may be exposed to SmartThings for one-way status updates using the [MQTT Discovery edge driver](https://github.com/toddaustin07/MQTT-Discovery) driver.
 
-- ~~In SmartThings IDE,~~
+**&#9432;** Note that the MQTT Discovery edge driver does not currently support security panel devices, so there is no current support for either status or configuration of the ADT Pulse alarm system ("armed", "disarmed", "home", "away", etc.) via SmartThings. Only contact and motion devices are currently supported, though siren and/or panel support may come in a future update.
 
-1. ~~add the following devicehandlers:
-   https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/devicetypes/haruny/VirtualADTAlarmSystem.src~~
-1. ~~add the following SmartApp:
-   https://github.com/adt-pulse-mqtt/adt-pulse-mqtt/tree/master/smartapps/haruny/ADTAlarmSmartApp.src~~
-1. ~~Add your devices using SmartThings IDE. You have to name them the same way they appear in ADT Portal.~~
-1. ~~Run the SmartApp in your mobile application. Follow the instructions. Do not rename ADT Alarm System device created by the app. Multiple alarm systems/locations is not supported.~~
-1. ~~In MQTT Bridge app, select all the devices created (Alarm system, contacts, motion etc.)~~
+1. Make sure the `adt-mqtt-pulse` application is configured and running properly.
+2. Follow instructions to set up the [MQTT Discover edge driver](https://github.com/toddaustin07/MQTT-Discovery?tab=readme-ov-file#instructions).
+3. Upon refresh in the SmartThings application, you should see ADT devices appear.
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg

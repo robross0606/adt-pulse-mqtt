@@ -32,7 +32,7 @@ client.on("connect", function () {
   console.log("MQTT Sub to: " + alarm_command_topic);
   client.subscribe(alarm_command_topic);
   if (smartthings) {
-    client.subscribe(smartthings_topic + "/ADT Alarm System/alarm/state");
+    client.subscribe(smartthings_topic + "/security/ADT Alarm System/state");
   }
 });
 
@@ -43,7 +43,7 @@ client.on("message", function (topic, message) {
 
   if (
     smartthings &&
-    topic == smartthings_topic + "/ADT Alarm System/alarm/state" &&
+    topic == smartthings_topic + "/security/ADT Alarm System/state" &&
     message.toString().includes("_push")
   ) {
     var toState = null;
@@ -61,7 +61,7 @@ client.on("message", function (topic, message) {
     }
     console.log(
       "\x1b[32m%s\x1b[0m",
-      new Date().toLocaleString() + " Pushing alarm state to HA:" + toState,
+      new Date().toLocaleString() + " Pushing alarm state to HA: " + toState,
     );
 
     if (toState != null) {
@@ -90,7 +90,7 @@ client.on("message", function (topic, message) {
     // I don't know this mode #5
     console.log(
       "\x1b[31m%s\x1b[0m",
-      new Date().toLocaleString() + " Unsupported state requested:" + msg,
+      new Date().toLocaleString() + " Unsupported state requested: " + msg,
     );
     return;
   }
@@ -148,7 +148,8 @@ myAlarm.onStatusUpdate(function (device) {
     );
     client.publish(alarm_state_topic, mqtt_state, { retain: true });
     if (smartthings) {
-      var sm_alarm_topic = smartthings_topic + "/ADT Alarm System/alarm/cmd";
+      var sm_alarm_topic =
+        smartthings_topic + "/security/ADT Alarm System/config";
       console.log(
         new Date().toLocaleString() +
           " Pushing alarm state to smartthings" +
@@ -161,33 +162,22 @@ myAlarm.onStatusUpdate(function (device) {
 });
 
 myAlarm.onZoneUpdate(function (device) {
-  var dev_zone_state_topic = zone_state_topic + "/" + device.name + "/state";
-  //var devValue = JSON.stringify(device);
-  var sm_dev_zone_state_topic;
-
-  // smartthings bridge assumes actionable devices have a topic set with cmd
+  // smartthings MQTT Discovery edge driver assumes:
+  // - New devices are announced/created with `config`
+  // - Device status are updated with `state`
   // adt/zone/DEVICE_NAME/state needs to turn into
-  // smartthings/DEVICE_NAME/door/cmd
-  // or
-  // smartthings/DEVICE_NAME/motion/cmd
+  // smartthings/contact/NODE_NAME/DEVICE_NAME/config
+  // smartthings/contact/NODE_NAME/DEVICE_NAME/state
+  // -or-
+  // smartthings/motion/NODE_NAME/DEVICE_NAME/config
+  // smartthings/motion/NODE_NAME/DEVICE_NAME/state
 
-  if (smartthings) {
-    var contactType = "door";
-    var contactValue = device.state == "devStatOK" ? "closed" : "open";
+  var trackedDeviceId = `${device.id}/${device.name}`;
+  var trackedDevice = devices[trackedDeviceId];
+  var isUntrackedDevice = trackedDevice == null;
+  if (isUntrackedDevice || device.timestamp > trackedDevice.timestamp) {
+    var dev_zone_state_topic = zone_state_topic + "/" + device.name + "/state";
 
-    if (device.tags.includes("motion")) {
-      contactType = "motion";
-      contactValue = device.state == "devStatOK" ? "inactive" : "active";
-    }
-    sm_dev_zone_state_topic =
-      smartthings_topic + "/" + device.name + "/" + contactType + "/cmd";
-  }
-
-  if (
-    devices[device.id] == null ||
-    devices[device.id] != null ||
-    device.timestamp > devices[device.id].timestamp
-  ) {
     client.publish(dev_zone_state_topic, device.state, { retain: false });
     console.log(
       "\x1b[32m%s\x1b[0m",
@@ -199,17 +189,53 @@ myAlarm.onZoneUpdate(function (device) {
     );
 
     if (smartthings) {
-      client.publish(sm_dev_zone_state_topic, contactValue, { retain: false });
+      var sm_device_type = "contact";
+      var sm_device_state = device.state == "devStatOK" ? "closed" : "open";
+      if (device.tags.includes("motion")) {
+        sm_device_type = "motion";
+        sm_device_state = device.state == "devStatOK" ? "inactive" : "active";
+      }
+
+      if (isUntrackedDevice) {
+        // Publish a config message
+        var sm_dev_zone_config_topic =
+          smartthings_topic +
+          "/" +
+          sm_device_type +
+          "/" +
+          trackedDeviceId +
+          "/config";
+        client.publish(sm_dev_zone_config_topic, sm_device_state, {
+          retain: false,
+        });
+        console.log(
+          new Date().toLocaleString() +
+            " Pushing new device to smartthings: " +
+            sm_device_state +
+            " to topic " +
+            sm_dev_zone_config_topic,
+        );
+      }
+      var sm_dev_zone_state_topic =
+        smartthings_topic +
+        "/" +
+        sm_device_type +
+        "/" +
+        trackedDeviceId +
+        "/state";
+      client.publish(sm_dev_zone_state_topic, sm_device_state, {
+        retain: false,
+      });
       console.log(
         new Date().toLocaleString() +
-          " Pushing to smartthings: " +
-          sm_dev_zone_state_topic +
-          " to " +
-          contactValue,
+          " Pushing device update to smartthings: " +
+          sm_device_state +
+          " to topic " +
+          sm_dev_zone_state_topic,
       );
     }
   }
-  devices[device.id] = device;
+  devices[trackedDeviceId] = device;
 });
 
 myAlarm.pulse();
