@@ -35,5 +35,6 @@ jobs:
           #VALIDATE_DOCKERFILE_HADOLINT: true
           VALIDATE_JAVASCRIPT_ES: true
           #FIX_SHELL_SHFMT: true
+          VALIDATE_YAML_PRETTIER: true
           FIX_YAML_PRETTIER: true
           FILTER_REGEX_EXCLUDE: ./old
