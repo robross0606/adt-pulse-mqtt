@@ -32,5 +32,8 @@ jobs:
           DEFAULT_BRANCH: "master"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINTER_RULES_PATH: /
+          VALIDATE_DOCKERFILE_HADOLINT: true
           VALIDATE_JAVASCRIPT_ES: true
+          FIX_SHELL_SHFMT: true
+          FIX_YAML_PRETTIER: true
           FILTER_REGEX_EXCLUDE: ./old
