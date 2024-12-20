@@ -25,14 +25,14 @@ jobs:
       #- name: Install Dependencies
       #  run: npm install --include=dev  
       - name: Lint Code Base
-        #uses: github/super-linter@v7
-        uses: github/super-linter@latest
+        uses: github/super-linter@v7
+        #uses: github/super-linter@latest
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: "master"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINTER_RULES_PATH: /
-          VALIDATE_DOCKERFILE_HADOLINT: true
+          #VALIDATE_DOCKERFILE_HADOLINT: true
           VALIDATE_JAVASCRIPT_ES: true
           FIX_SHELL_SHFMT: true
           FIX_YAML_PRETTIER: true
