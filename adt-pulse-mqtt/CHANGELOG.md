@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.3.3
+
+- Resolve #202 Changing method of parsing data via cheerio by @robross0606 in #203
+- #201 Preliminary re-integration with SmartThings via MQTT Discovery edge driver by @robross0606 in #209
+- Dependency updates
+
 ## 3.3.2
 
 - Dependency updates
